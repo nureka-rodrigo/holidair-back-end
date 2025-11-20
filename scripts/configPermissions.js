@@ -109,7 +109,7 @@ async function automatePermissions() {
             permissionId: permissionObj._id,
           });
 
-          if (permissionCheckBoxes.length == 0) {
+          if (permissionCheckBoxes.length === 0) {
             console.log(
               '\x1b[35m',
               '[permission script] Creating Permission Checkboxes for:',

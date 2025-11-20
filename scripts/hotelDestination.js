@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
-const axios = require('axios');
-const crypto = require('crypto');
+require('dotenv').config();
 const Country = require('../src/models/Country');
 const ActivityDestination = require('../src/models/ActivityDestination');
 
-const database = process.env.DBNAME;
-const mongoURI = 'mongodb://127.0.0.1:27017/' + database;
+const mongoURI = process.env.MONGODB_URL;
 
 async function connectToDatabase() {
   try {
@@ -37,7 +35,7 @@ async function fetchDestinationsByCountry() {
 async function main() {
   await connectToDatabase();
   await fetchDestinationsByCountry();
-  mongoose.disconnect(); // Optional, disconnect after operation
+  await mongoose.disconnect();
 }
 
 main();
