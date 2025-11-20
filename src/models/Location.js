@@ -1,5 +1,5 @@
-const { required } = require("joi");
-const mongoose = require("mongoose");
+const { required } = require('joi');
+const mongoose = require('mongoose');
 
 const LocationSchema = new mongoose.Schema(
   {
@@ -19,6 +19,6 @@ const LocationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Location = mongoose.model("Location", LocationSchema);
+const Location = mongoose.model('Location', LocationSchema);
 
 module.exports = Location;

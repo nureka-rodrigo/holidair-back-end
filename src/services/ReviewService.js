@@ -1,4 +1,4 @@
-const Review = require("../models/Review");
+const Review = require('../models/Review');
 
 class ReviewService {
   async create(data) {
@@ -54,20 +54,20 @@ class ReviewService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
           data: result.map((review) => ({
             _id: review._id,
             name: review.name,
-            review: review.review.substring(0, 3).trimEnd() + "...",
+            review: review.review.substring(0, 3).trimEnd() + '...',
             image_url: review.image_url,
           })),
           dataCount: count,
           dataPerPage: itemsPerPage,
           currentPaginationIndex: 1, // Assuming this should be 1 for the first page
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
       return response;

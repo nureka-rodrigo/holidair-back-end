@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const AttractionBookingDetailSchema = new mongoose.Schema(
   {
@@ -22,7 +22,7 @@ const AttractionBookingDetailSchema = new mongoose.Schema(
 );
 
 const AttractionBookingDetail = mongoose.model(
-  "AttractionBookingDetail",
+  'AttractionBookingDetail',
   AttractionBookingDetailSchema
 );
 

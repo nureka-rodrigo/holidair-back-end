@@ -1,6 +1,6 @@
-const HotelBookingDetail = require("../models/HotelBooking/BookingDetail");
-const { User } = require("../models/UserManagement/User");
-const BookingDetails = require("../models/flightBooking/BookingDetails");
+const HotelBookingDetail = require('../models/HotelBooking/BookingDetail');
+const { User } = require('../models/UserManagement/User');
+const BookingDetails = require('../models/flightBooking/BookingDetails');
 
 class BookingService {
   async getFlightBookings(data) {
@@ -12,18 +12,18 @@ class BookingService {
       const filters = data.filters || {};
       let query = {};
       if (filters) {
-        if (filters.booking_id && filters.booking_id !== "") {
-          query.booking_id = { $regex: filters.booking_id, $options: "i" };
+        if (filters.booking_id && filters.booking_id !== '') {
+          query.booking_id = { $regex: filters.booking_id, $options: 'i' };
         }
-        if (filters.email && filters.email !== "") {
-          query.email = { $regex: filters.email, $options: "i" };
+        if (filters.email && filters.email !== '') {
+          query.email = { $regex: filters.email, $options: 'i' };
         }
       }
 
-      if (filters.user && filters.user !== "") {
+      if (filters.user && filters.user !== '') {
         // Step 1: Find users with the matching user_name
         const users = await User.find({
-          user_name: { $regex: filters.user, $options: "i" },
+          user_name: { $regex: filters.user, $options: 'i' },
         });
         const userIds = users.map((user) => user._id);
 
@@ -34,8 +34,8 @@ class BookingService {
         .skip(skip)
         .limit(itemsPerPage)
         .populate({
-          path: "user_id",
-          select: "first_name last_name", // Select only name field of the brand object
+          path: 'user_id',
+          select: 'first_name last_name', // Select only name field of the brand object
           // Select only name field of the brand object
         });
       const count = await BookingDetails.countDocuments(query);
@@ -43,12 +43,12 @@ class BookingService {
         flightBooking.map(async (booking, index) => {
           return {
             id: booking.booking_id,
-            first_name: booking.user_id ? booking.user_id.first_name : "",
-            last_name: booking.user_id ? booking.user_id.last_name : "",
+            first_name: booking.user_id ? booking.user_id.first_name : '',
+            last_name: booking.user_id ? booking.user_id.last_name : '',
             email: booking.email,
             provider_reference: booking.brightsun_reference
               ? booking.brightsun_reference
-              : "",
+              : '',
             trip_type: booking.trip_type,
             amount: booking.amount,
             contact_number: booking.contact_number,
@@ -65,7 +65,7 @@ class BookingService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -73,7 +73,7 @@ class BookingService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "Data returned",
+          message: 'Data returned',
         };
       }
       // console.log(response)
@@ -93,11 +93,11 @@ class BookingService {
       const filters = data.filters || {};
       let query = {};
       if (filters) {
-        if (filters.booking_id && filters.booking_id !== "") {
-          query.booking_id = { $regex: filters.booking_id, $options: "i" };
+        if (filters.booking_id && filters.booking_id !== '') {
+          query.booking_id = { $regex: filters.booking_id, $options: 'i' };
         }
-        if (filters.email && filters.email !== "") {
-          query.email = { $regex: filters.email, $options: "i" };
+        if (filters.email && filters.email !== '') {
+          query.email = { $regex: filters.email, $options: 'i' };
         }
       }
 
@@ -109,15 +109,15 @@ class BookingService {
       const dataResponse = hotelBookings.map((booking, index) => {
         return {
           id: booking.booking_id,
-          customer_name: booking.name + " " + booking.surname,
+          customer_name: booking.name + ' ' + booking.surname,
           email: booking.email,
-          provider_reference: booking.reference ? booking.reference : "",
+          provider_reference: booking.reference ? booking.reference : '',
           trip_type: booking.trip_type,
-          hotel_name: booking.hotel_data ? booking.hotel_data.hotel.name : "",
-          amount: booking.hotel_data ? booking.hotel_data.totalSellingRate : "",
+          hotel_name: booking.hotel_data ? booking.hotel_data.hotel.name : '',
+          amount: booking.hotel_data ? booking.hotel_data.totalSellingRate : '',
           booking_date: booking.hotel_data
             ? booking.hotel_data.hotel.checkIn
-            : "",
+            : '',
           booking_status: booking.booking_status,
           createdAt: booking.createdAt,
         };
@@ -131,7 +131,7 @@ class BookingService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -139,7 +139,7 @@ class BookingService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "Data returned",
+          message: 'Data returned',
         };
       }
       return response;

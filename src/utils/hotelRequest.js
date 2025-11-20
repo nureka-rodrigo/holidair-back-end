@@ -1,32 +1,32 @@
-const axios = require("axios");
-const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
+const axios = require('axios');
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 const baseURL = process.env.HOTEL_URL;
 
 // Define log file paths in the logs folder
-const logsFolder = path.join(__dirname, "../logs");
-const requestLogPath = path.join(logsFolder, "request.json");
-const responseLogPath = path.join(logsFolder, "response.json");
-const errorLogPath = path.join(logsFolder, "error.json");
+const logsFolder = path.join(__dirname, '../logs');
+const requestLogPath = path.join(logsFolder, 'request.json');
+const responseLogPath = path.join(logsFolder, 'response.json');
+const errorLogPath = path.join(logsFolder, 'error.json');
 
 // Ensure logs folder exists
 if (!fs.existsSync(logsFolder)) {
   fs.mkdirSync(logsFolder, { recursive: true });
 }
 
-async function makeHotelApiRequest(method, endpoint, body = "", reqBody = "") {
+async function makeHotelApiRequest(method, endpoint, body = '', reqBody = '') {
   try {
     const timestamp = Math.floor(Date.now() / 1000);
     const toHash = `${process.env.HOTELBEDS_API_KEY}${process.env.HOTELBEDS_API_SECRET}${timestamp}`;
-    const xSignature = crypto.createHash("sha256").update(toHash).digest("hex");
+    const xSignature = crypto.createHash('sha256').update(toHash).digest('hex');
     const url = `${baseURL}/${endpoint}`;
     const headers = {
-      "Api-key": process.env.HOTELBEDS_API_KEY,
-      "X-Signature": xSignature,
-      Accept: "application/json",
-      "Accept-Encoding": "gzip",
+      'Api-key': process.env.HOTELBEDS_API_KEY,
+      'X-Signature': xSignature,
+      Accept: 'application/json',
+      'Accept-Encoding': 'gzip',
     };
 
     // Axios request options

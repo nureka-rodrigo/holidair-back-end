@@ -33,11 +33,11 @@ async function getLastDepartureDate(flightData) {
     if (lastArrivalDate) {
       const dateObject = new Date(lastArrivalDate);
       return {
-        date: dateObject.toISOString().split("T")[0],
+        date: dateObject.toISOString().split('T')[0],
       }; // Format as YYYY-MM-DD
     }
   } catch (error) {
-    return "";
+    return '';
   }
 }
 

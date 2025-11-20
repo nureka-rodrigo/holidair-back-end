@@ -103,8 +103,8 @@ async function getUniqueAirports(arr) {
 }
 
 async function getAirportCodes(data) {
-  let origin = "";
-  let finalDestination = "";
+  let origin = '';
+  let finalDestination = '';
 
   if (data.length > 0) {
     // Get the journey (assumed to be one-way)

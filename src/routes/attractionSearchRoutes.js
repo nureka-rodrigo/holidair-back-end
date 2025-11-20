@@ -1,10 +1,10 @@
-const express = require("express");
-const AttractionSearchController = require("../controllers/AttractionSearchController");
+const express = require('express');
+const AttractionSearchController = require('../controllers/AttractionSearchController');
 const router = express.Router();
 
-router.post("/", AttractionSearchController.searchAttractions);
+router.post('/', AttractionSearchController.searchAttractions);
 router.post(
-  "/selected-data",
+  '/selected-data',
   AttractionSearchController.getSelectedAttractionDetails
 );
 

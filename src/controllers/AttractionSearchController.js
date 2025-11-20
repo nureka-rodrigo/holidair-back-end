@@ -1,16 +1,16 @@
-const getClientIp = require("../helpers/genaralHelper");
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const { getAdultPaxAmountRange } = require("../helpers/hotelSearchHelper");
-const ApiRequestLogService = require("../services/ApiRequestLogService");
-const makeAttractionApiRequest = require("../utils/attractionRequest");
+const getClientIp = require('../helpers/genaralHelper');
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const { getAdultPaxAmountRange } = require('../helpers/hotelSearchHelper');
+const ApiRequestLogService = require('../services/ApiRequestLogService');
+const makeAttractionApiRequest = require('../utils/attractionRequest');
 
 class AttractionSearchController {
   async searchAttractions(req, res) {
     const ip = await getClientIp(req);
     try {
       const response = await makeAttractionApiRequest(
-        "POST",
-        "availability",
+        'POST',
+        'availability',
         req.body.params
       );
 
@@ -25,7 +25,7 @@ class AttractionSearchController {
           browserData: req.body.browserData,
           ip: ip,
           success_status: true,
-          endpoint: "activity search",
+          endpoint: 'activity search',
         });
 
         res.status(200).json({
@@ -42,7 +42,7 @@ class AttractionSearchController {
           browserData: req.body.browserData,
           ip: ip,
           success_status: false,
-          endpoint: "activity search",
+          endpoint: 'activity search',
         });
       }
     } catch (error) {
@@ -52,7 +52,7 @@ class AttractionSearchController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: false,
-        endpoint: "activity search",
+        endpoint: 'activity search',
       });
       // await sendErrorNotificationEmail(
       //   "",
@@ -68,8 +68,8 @@ class AttractionSearchController {
     const ip = await getClientIp(req);
     try {
       const response = await makeAttractionApiRequest(
-        "POST",
-        "details",
+        'POST',
+        'details',
         req.body.params
       );
       console.log(response);
@@ -80,7 +80,7 @@ class AttractionSearchController {
           browserData: req.body.browserData,
           ip: ip,
           success_status: true,
-          endpoint: "activity get",
+          endpoint: 'activity get',
         });
         res.status(200).json({ data: response });
       } else {
@@ -90,15 +90,15 @@ class AttractionSearchController {
           browserData: req.body.browserData,
           ip: ip,
           success_status: false,
-          endpoint: "activity get",
+          endpoint: 'activity get',
         });
       }
     } catch (error) {
       await sendErrorNotificationEmail(
-        "",
+        '',
         error,
-        "",
-        "Attraction select API Error"
+        '',
+        'Attraction select API Error'
       );
       res.status(500).json({ error: error });
     }

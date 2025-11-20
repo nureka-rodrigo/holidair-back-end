@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname); // Naming files to avoid conflicts
-  }
+  },
 });
 
 // Initialize multer middleware

@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require('mongoose');
 
 const HotelDestinationsSchema = new mongoose.Schema({
   name: {
@@ -16,7 +16,7 @@ const HotelDestinationsSchema = new mongoose.Schema({
 });
 
 const HotelDestination = mongoose.model(
-  "HotelDestination",
+  'HotelDestination',
   HotelDestinationsSchema
 );
 

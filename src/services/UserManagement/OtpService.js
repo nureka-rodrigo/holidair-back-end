@@ -9,10 +9,10 @@ class OTPService {
   async generateAndSendOTP(userId, phoneNumber) {
     const otp = this.generateOTP();
     await this.saveOTP(userId, otp);
-    
+
     // Send the OTP via SMS
     const message = `Your OTP for password reset is: ${otp}`;
-   // SMSClient.sendSMS(phoneNumber, message); // Implement the SMS sending logic
+    // SMSClient.sendSMS(phoneNumber, message); // Implement the SMS sending logic
   }
 
   generateOTP() {
@@ -27,7 +27,9 @@ class OTPService {
 
   async verifyOTP(userId, otp) {
     // Retrieve the OTP associated with the user's user_id from the database
-    const userOTP = await UserOTP.findOne({ user_id: userId }).sort({ createdAt: -1 });
+    const userOTP = await UserOTP.findOne({ user_id: userId }).sort({
+      createdAt: -1,
+    });
 
     // Verify if the provided OTP matches the saved OTP associated with the user's user_id
     return userOTP && userOTP.otp === otp;

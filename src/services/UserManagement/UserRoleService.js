@@ -1,6 +1,6 @@
-const UserRole = require("../../models/UserManagement/UserRole");
-const { User } = require("../../models/UserManagement/User");
-const UserRolePermissionAssign = require("../../models/UserManagement/Permissions/RolePermissionAssign");
+const UserRole = require('../../models/UserManagement/UserRole');
+const { User } = require('../../models/UserManagement/User');
+const UserRolePermissionAssign = require('../../models/UserManagement/Permissions/RolePermissionAssign');
 
 class UserRoleService {
   async create(userRole) {
@@ -10,7 +10,7 @@ class UserRoleService {
       return newUserRole;
     } catch (error) {
       console.error(error); // Log the error for debugging purposes
-      throw new Error("Failed to create user role."); // Throw a new error to propagate the error to the caller
+      throw new Error('Failed to create user role.'); // Throw a new error to propagate the error to the caller
     }
   }
 
@@ -20,12 +20,12 @@ class UserRoleService {
         new: true,
       });
       if (!updatedUserRole) {
-        throw new Error("User role not found");
+        throw new Error('User role not found');
       }
       return updatedUserRole;
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while updating user role");
+      throw new Error('Error occurred while updating user role');
     }
   }
 
@@ -33,12 +33,12 @@ class UserRoleService {
     try {
       const userRole = await UserRole.findByIdAndDelete(id);
       if (!userRole) {
-        throw new Error("User role not found");
+        throw new Error('User role not found');
       }
       return userRole;
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while deleting user role");
+      throw new Error('Error occurred while deleting user role');
     }
   }
 
@@ -46,7 +46,7 @@ class UserRoleService {
     try {
       const userRole = await UserRole.findById(id);
       if (!userRole) {
-        throw new Error("User role not found");
+        throw new Error('User role not found');
       }
 
       let response = {
@@ -66,7 +66,7 @@ class UserRoleService {
       return response;
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while getting user role by id");
+      throw new Error('Error occurred while getting user role by id');
     }
   }
 
@@ -81,20 +81,20 @@ class UserRoleService {
       let query = {};
 
       if (filters) {
-        if (filters.role && filters.role !== "") {
-          query.role = { $regex: filters.role, $options: "i" };
+        if (filters.role && filters.role !== '') {
+          query.role = { $regex: filters.role, $options: 'i' };
         }
       }
 
-      if (data.search && data.search !== "") {
-        query.role = { $regex: data.search, $options: "i" };
+      if (data.search && data.search !== '') {
+        query.role = { $regex: data.search, $options: 'i' };
       }
 
       const result = await UserRole.find(query)
         .skip(skip)
         .limit(itemsPerPage)
         .sort({ createdAt: -1 })
-        .select("-createdAt, -updatedAt, -__v");
+        .select('-createdAt, -updatedAt, -__v');
       const count = await UserRole.countDocuments(query);
 
       const refinedData = [];
@@ -106,7 +106,7 @@ class UserRoleService {
         refinedData.push({
           _id: item._id,
           name: item.role,
-          "USER COUNT": user_count,
+          'USER COUNT': user_count,
           priority: item.ID,
         });
       }
@@ -119,7 +119,7 @@ class UserRoleService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -127,14 +127,14 @@ class UserRoleService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "Data returned",
+          message: 'Data returned',
         };
       }
 
       return response;
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while getting user roles");
+      throw new Error('Error occurred while getting user roles');
     }
   }
 }

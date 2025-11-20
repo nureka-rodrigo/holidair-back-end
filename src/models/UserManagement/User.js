@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const Joi = require("joi");
-const jwt = require("jsonwebtoken");
+const mongoose = require('mongoose');
+const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
   // code: {
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
   },
   user_role_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "UserRole",
+    ref: 'UserRole',
   },
   // shop_name: String,
   // area: String,
@@ -85,12 +85,12 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 userSchema.methods.generateAuthToken = function (role_id) {
   const token = jwt.sign({ userId: this._id, role: role_id }, jwtSecretKey, {
-    expiresIn: "1d",
+    expiresIn: '1d',
   });
   return token;
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
   const schema = Joi.object({

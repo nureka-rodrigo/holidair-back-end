@@ -1,8 +1,8 @@
-const BookingDetails = require("../models/flightBooking/BookingDetails");
+const BookingDetails = require('../models/flightBooking/BookingDetails');
 
 // Helper function to generate random digits
 function getRandomDigits(length) {
-  let digits = "";
+  let digits = '';
   for (let i = 0; i < length; i++) {
     digits += Math.floor(Math.random() * 10).toString();
   }
@@ -10,7 +10,7 @@ function getRandomDigits(length) {
 }
 
 // Helper function to generate unique transaction ID
-async function transactionIdGenerator(prefix = "TR") {
+async function transactionIdGenerator(prefix = 'TR') {
   let transactionID;
   let exists = true;
 

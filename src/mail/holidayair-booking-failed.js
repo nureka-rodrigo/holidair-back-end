@@ -1,5 +1,5 @@
 module.exports = (data) => {
-    return `
+  return `
 <!doctype html>
 <html lang="en-US">
 

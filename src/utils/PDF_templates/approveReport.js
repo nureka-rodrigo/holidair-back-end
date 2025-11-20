@@ -1,15 +1,19 @@
 module.exports = function approveReport(data) {
-    const productList = data.products.map(product => `
+  const productList = data.products
+    .map(
+      (product) => `
         <tr>
             <td>${product.product_id.name}</td>
             <td>${product.remark}</td>
             <td>${product.qty}</td>
             <td>${product.price.toFixed(2)} LKR</td>
-            <td>${(product.type == 1) ? 'Yes' : 'No'}</td>
+            <td>${product.type == 1 ? 'Yes' : 'No'}</td>
         </tr>
-    `).join('');
+    `
+    )
+    .join('');
 
-    return `
+  return `
         <!DOCTYPE html>
         <html lang="en">
         <head>

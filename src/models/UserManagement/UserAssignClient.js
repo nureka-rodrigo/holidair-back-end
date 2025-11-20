@@ -3,22 +3,25 @@ const mongoose = require('mongoose');
 const userAssignClientSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: true
+    required: true,
   },
   client_id: {
     type: String,
-    required: true
+    required: true,
   },
   Created_at: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   Updated_at: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-const UserAssignClient = mongoose.model('UserAssignClient', userAssignClientSchema);
+const UserAssignClient = mongoose.model(
+  'UserAssignClient',
+  userAssignClientSchema
+);
 
 module.exports = UserAssignClient;

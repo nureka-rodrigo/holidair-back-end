@@ -1,19 +1,19 @@
-const express = require("express");
-const FlightBookingController = require("../controllers/FlightBookingController");
+const express = require('express');
+const FlightBookingController = require('../controllers/FlightBookingController');
 const router = express.Router();
-const auth = require("../middlewares/jwtMiddleware");
+const auth = require('../middlewares/jwtMiddleware');
 
-router.post("/", FlightBookingController.bookFlight);
+router.post('/', FlightBookingController.bookFlight);
 router.post(
-  "/get-prices",
+  '/get-prices',
   FlightBookingController.getSelectedFlightPriceSearch
 );
 router.put(
-  "/update-booking-status/:bookingId",
+  '/update-booking-status/:bookingId',
   FlightBookingController.updateBookingStatus
 );
 router.get(
-  "/update-booking-confirmation",
+  '/update-booking-confirmation',
   FlightBookingController.updatePaymentStatus
 );
 

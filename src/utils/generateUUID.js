@@ -3,7 +3,7 @@ async function generateUUID(Model, code, startAt = 1, codeLen = 4) {
   let codeLength = codeLen;
 
   while (true) {
-    const paddedCount = count.toString().padStart(codeLength, "0");
+    const paddedCount = count.toString().padStart(codeLength, '0');
     const uuid = code + paddedCount;
 
     // Check if the generated UUID already exists in the database
@@ -28,7 +28,7 @@ async function generateUUIDs(Model, code, startAt = 1, codeLen = 4, quantity) {
 
   for (let i = 0; i < quantity; i++) {
     while (true) {
-      const paddedCount = count.toString().padStart(codeLength, "0");
+      const paddedCount = count.toString().padStart(codeLength, '0');
       const uuid = code + paddedCount;
 
       // Check if the generated UUID already exists in the database

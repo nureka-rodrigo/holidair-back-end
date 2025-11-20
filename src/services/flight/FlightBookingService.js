@@ -1,15 +1,15 @@
-const generateBookingID = require("../../helpers/bookingIdGenerator");
-const BookingDetails = require("../../models/flightBooking/BookingDetails");
-const FlightCustomerAddress = require("../../models/flightBooking/FlightCustomerAddress");
-const PaxDetail = require("../../models/flightBooking/PaxDetail");
-const mongoose = require("mongoose");
+const generateBookingID = require('../../helpers/bookingIdGenerator');
+const BookingDetails = require('../../models/flightBooking/BookingDetails');
+const FlightCustomerAddress = require('../../models/flightBooking/FlightCustomerAddress');
+const PaxDetail = require('../../models/flightBooking/PaxDetail');
+const mongoose = require('mongoose');
 
 class FlightBookingService {
   async create(data, userId) {
     try {
       const transformedData = {
-        user_id: userId ?? "",
-        booking_id: await generateBookingID("FL"),
+        user_id: userId ?? '',
+        booking_id: await generateBookingID('FL'),
         key: data.Key,
         trip_type: data.TripType,
         token: data.token,
@@ -49,7 +49,7 @@ class FlightBookingService {
       const address = await FlightCustomerAddress.create(addressObject);
       return address;
     } catch (error) {
-      console.error("Error creating flight customer address:", error);
+      console.error('Error creating flight customer address:', error);
       throw error;
     }
   }
@@ -71,7 +71,7 @@ class FlightBookingService {
       });
       return await PaxDetail.insertMany(paxDetailsWithBookingId);
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -80,7 +80,7 @@ class FlightBookingService {
     try {
       return await BookingDetails.findById(id);
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -99,7 +99,7 @@ class FlightBookingService {
         return null;
       }
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -124,7 +124,7 @@ class FlightBookingService {
         return null;
       }
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -134,18 +134,18 @@ class FlightBookingService {
       if (data.STATUS == 5) {
         await BookingDetails.findOneAndUpdate(
           { booking_id: data.ORDERID },
-          { booking_status: "payment-success" },
+          { booking_status: 'payment-success' },
           { new: true } // Return the updated document
         );
       } else if (data.STATUS == 2) {
         await BookingDetails.findOneAndUpdate(
           { booking_id: data.ORDERID },
-          { booking_status: "payment-declined" },
+          { booking_status: 'payment-declined' },
           { new: true } // Return the updated document
         );
       }
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -153,12 +153,12 @@ class FlightBookingService {
   async getPaxDetailsByBookingId(bookingId) {
     try {
       const paxDetails = await PaxDetail.find({ flight_booking_id: bookingId })
-        .populate("flight_booking_id") // Populating flight_booking_id reference if needed
+        .populate('flight_booking_id') // Populating flight_booking_id reference if needed
         .exec();
 
       return paxDetails;
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -175,7 +175,7 @@ class FlightBookingService {
         { new: true, useFindAndModify: false } // Options: return the updated document
       );
     } catch (error) {
-      console.error("Error creating penair id:", error);
+      console.error('Error creating penair id:', error);
       throw error;
     }
   }
@@ -190,18 +190,18 @@ class FlightBookingService {
 
       if (!leadPax) {
         throw new Error(
-          "Lead passenger not found for the provided booking ID."
+          'Lead passenger not found for the provided booking ID.'
         );
       }
 
       // Combine first name, middle name, and last name to form the full name
-      const fullName = `${leadPax.first_name || ""} ${
-        leadPax.middle_name || ""
-      } ${leadPax.last_name || ""}`.trim();
+      const fullName = `${leadPax.first_name || ''} ${
+        leadPax.middle_name || ''
+      } ${leadPax.last_name || ''}`.trim();
 
       return fullName;
     } catch (error) {
-      console.error("Error creating penair id:", error);
+      console.error('Error creating penair id:', error);
       throw error;
     }
   }

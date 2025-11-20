@@ -1,20 +1,20 @@
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const holidayairBookingConfirm = require("../mail/holidayair-booking-confirm");
-const holidayairBookingFailed = require("../mail/holidayair-booking-failed");
-const sendMail = require("../mail/mail");
-const HotelBookingService = require("../services/hotel/HotelBookingService");
-const makeHotelApiRequest = require("../utils/hotelRequest");
-const jwt = require("jsonwebtoken");
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const holidayairBookingConfirm = require('../mail/holidayair-booking-confirm');
+const holidayairBookingFailed = require('../mail/holidayair-booking-failed');
+const sendMail = require('../mail/mail');
+const HotelBookingService = require('../services/hotel/HotelBookingService');
+const makeHotelApiRequest = require('../utils/hotelRequest');
+const jwt = require('jsonwebtoken');
 
 class HotelBookingController {
   async bookHotel(req, res) {
     try {
       let decoded;
-      let userId = "";
-      const authToken = req.headers["x-access-token"];
-      if (authToken.split(" ")[1] !== undefined) {
+      let userId = '';
+      const authToken = req.headers['x-access-token'];
+      if (authToken.split(' ')[1] !== undefined) {
         decoded = jwt.verify(
-          authToken.split(" ")[1],
+          authToken.split(' ')[1],
           process.env.JWT_SECRET_KEY
         );
         userId = decoded.userId;
@@ -28,18 +28,18 @@ class HotelBookingController {
         req.body.rooms
       );
       const hotelBookingResponse = await makeHotelApiRequest(
-        "POST",
-        "hotel-api/3.0/bookings",
-        "",
+        'POST',
+        'hotel-api/3.0/bookings',
+        '',
         req.body
       );
-      if (hotelBookingResponse.booking.status === "CONFIRMED") {
+      if (hotelBookingResponse.booking.status === 'CONFIRMED') {
         await HotelBookingService.updateHotelBookingConfirmationDetails(
           bookingResponse._id,
           hotelBookingResponse
         );
         const finalResponse = {
-          status: "OK",
+          status: 'OK',
           hotelBookingResponse: hotelBookingResponse,
           bookingResponse: bookingResponse,
         };
@@ -68,11 +68,11 @@ class HotelBookingController {
       }
     } catch (error) {
       await sendErrorNotificationEmail(
-        "",
+        '',
 
         error,
-        "",
-        "Hotel booking API Error"
+        '',
+        'Hotel booking API Error'
       );
       res.status(500).json({ error: error });
     }

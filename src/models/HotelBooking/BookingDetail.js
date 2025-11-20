@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BookingDetailSchema = new mongoose.Schema(
   {
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     name: {
       type: String,
@@ -14,7 +14,7 @@ const BookingDetailSchema = new mongoose.Schema(
     },
     booking_status: {
       type: String,
-      default: "booking-created",
+      default: 'booking-created',
     },
     surname: {
       type: String,
@@ -52,7 +52,7 @@ const BookingDetailSchema = new mongoose.Schema(
 );
 
 const HotelBookingDetail = mongoose.model(
-  "HotelBookingDetail",
+  'HotelBookingDetail',
   BookingDetailSchema
 );
 

@@ -1,7 +1,7 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.sendgrid.net", // SendGrid SMTP host
+  host: 'smtp.sendgrid.net', // SendGrid SMTP host
   port: 587, // Using TLS on port 587
   secure: false, // Use `false` for TLS
   auth: {
@@ -16,14 +16,14 @@ const transporter = nodemailer.createTransport({
 async function sendBookingMail(receiverAddress, subject, template) {
   try {
     const mailInfo = await transporter.sendMail({
-      from: "onlinebooking@holidayair.com",
+      from: 'onlinebooking@holidayair.com',
       to: receiverAddress,
       subject,
       html: template,
     });
   } catch (error) {
     console.error(error);
-    throw "Mail sending failed";
+    throw 'Mail sending failed';
   }
 }
 module.exports = sendBookingMail;

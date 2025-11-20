@@ -1,5 +1,5 @@
-const Package = require("../models/Package");
-const formatCurrency = require("../utils/formatCurrency");
+const Package = require('../models/Package');
+const formatCurrency = require('../utils/formatCurrency');
 
 class PackageService {
   async create(data) {
@@ -22,12 +22,12 @@ class PackageService {
     try {
       return await Package.findById(id)
         .populate({
-          path: "city_id",
-          select: "name _id", // Select only name field of the brand object
+          path: 'city_id',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "country_id",
-          select: "name _id", // Select only name field of the brand object
+          path: 'country_id',
+          select: 'name _id', // Select only name field of the brand object
         });
     } catch (error) {
       throw error;
@@ -54,8 +54,8 @@ class PackageService {
       const query = { is_deleted: false, ...filters };
 
       const result = await Package.find(query).populate({
-        path: "city_id",
-        select: "name", // Select only name field of the brand object
+        path: 'city_id',
+        select: 'name', // Select only name field of the brand object
       });
       const count = await Package.countDocuments(query);
 
@@ -67,25 +67,25 @@ class PackageService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
           data: result.map((pack) => ({
             _id: pack._id,
             package_name: pack.package_name,
-            city_name: pack.city ?? "",
+            city_name: pack.city ?? '',
             currency: pack.currency,
             price: formatCurrency(pack.price),
             duration: parseInt(pack.duration),
 
-            min_pax: pack.min_pax ? parseInt(pack.min_pax) : "",
-            max_pax: pack.max_pax ? parseInt(pack.max_pax) : "",
+            min_pax: pack.min_pax ? parseInt(pack.min_pax) : '',
+            max_pax: pack.max_pax ? parseInt(pack.max_pax) : '',
           })),
           dataCount: count,
           dataPerPage: itemsPerPage,
           currentPaginationIndex: 1, // Assuming this should be 1 for the first page
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
       return response;
@@ -122,8 +122,8 @@ class PackageService {
     try {
       const query = { is_deleted: false, holiday_offers: true };
       const result = await Package.find(query).populate({
-        path: "city_id",
-        select: "name", // Select only name field of the brand object
+        path: 'city_id',
+        select: 'name', // Select only name field of the brand object
       });
       const response = result.map((data) => ({
         title: data.title,
@@ -144,8 +144,8 @@ class PackageService {
     try {
       const query = { is_deleted: false, hotels: true };
       const result = await Package.find(query).populate({
-        path: "city_id",
-        select: "name", // Select only name field of the brand object
+        path: 'city_id',
+        select: 'name', // Select only name field of the brand object
       });
       const response = result.map((data) => ({
         title: data.title,
@@ -165,8 +165,8 @@ class PackageService {
     try {
       const query = { is_deleted: false, hot_deals: true };
       const result = await Package.find(query).populate({
-        path: "city_id",
-        select: "name", // Select only name field of the brand object
+        path: 'city_id',
+        select: 'name', // Select only name field of the brand object
       });
       const response = result.map((data) => ({
         title: data.title,
@@ -186,8 +186,8 @@ class PackageService {
     try {
       const query = { is_deleted: false, holiday_packages: true };
       const result = await Package.find(query).populate({
-        path: "city_id",
-        select: "name", // Select only name field of the brand object
+        path: 'city_id',
+        select: 'name', // Select only name field of the brand object
       });
       const response = result.map((data) => ({
         title: data.title,

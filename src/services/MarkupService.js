@@ -1,4 +1,4 @@
-const Markup = require("../models/Markup");
+const Markup = require('../models/Markup');
 
 class MarkupService {
   async createMarkup(data) {
@@ -52,7 +52,7 @@ class MarkupService {
         dataCount: 0,
         currentPaginationIndex: page,
         dataPerPage: 20,
-        message: "There are not matching records.",
+        message: 'There are not matching records.',
       };
     } else {
       response = {

@@ -1,6 +1,6 @@
-const fs = require("fs");
-const csvParser = require("csv-parser");
-const { Transform } = require("stream");
+const fs = require('fs');
+const csvParser = require('csv-parser');
+const { Transform } = require('stream');
 
 class SkipLines extends Transform {
   constructor(options = {}) {
@@ -10,10 +10,10 @@ class SkipLines extends Transform {
   }
 
   _transform(chunk, encoding, callback) {
-    const lines = chunk.toString().split("\n");
+    const lines = chunk.toString().split('\n');
     const start = this.lineCount < this.skip ? this.skip - this.lineCount : 0;
     this.lineCount += lines.length;
-    this.push(lines.slice(start).join("\n"));
+    this.push(lines.slice(start).join('\n'));
     callback();
   }
 }
@@ -24,7 +24,7 @@ class SkipLines extends Transform {
  * @param {String} filePath  - path of the csv file
  * @returns {Promise<object[]>} - return an array of objects
  */
-async function readCSV(filePath = "", skip = 0) {
+async function readCSV(filePath = '', skip = 0) {
   try {
     let items = [];
 
@@ -32,13 +32,13 @@ async function readCSV(filePath = "", skip = 0) {
       fs.createReadStream(filePath)
         .pipe(new SkipLines({ skip }))
         .pipe(csvParser())
-        .on("data", async (row) => {
+        .on('data', async (row) => {
           items.push(row);
         })
-        .on("end", async () => {
+        .on('end', async () => {
           resolve(items);
         })
-        .on("error", (error) => {
+        .on('error', (error) => {
           reject(error);
         });
     });
@@ -49,8 +49,8 @@ async function readCSV(filePath = "", skip = 0) {
 }
 
 function filterArray(array, properties) {
-  return array.filter(obj =>
-    properties.every(prop => obj.hasOwnProperty(prop))
+  return array.filter((obj) =>
+    properties.every((prop) => obj.hasOwnProperty(prop))
   );
 }
 

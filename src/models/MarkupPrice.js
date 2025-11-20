@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const MarkUpPriceSchema = new mongoose.Schema(
   {
@@ -16,6 +16,6 @@ const MarkUpPriceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const MarkupPrice = mongoose.model("MarkupPrice", MarkUpPriceSchema);
+const MarkupPrice = mongoose.model('MarkupPrice', MarkUpPriceSchema);
 
 module.exports = MarkupPrice;

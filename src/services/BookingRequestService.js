@@ -1,5 +1,5 @@
-const BookingRequest = require("../models/BookingRequest");
-const CallMeRequest = require("../models/CallMeRequest");
+const BookingRequest = require('../models/BookingRequest');
+const CallMeRequest = require('../models/CallMeRequest');
 
 class BookingRequestService {
   async create(data) {
@@ -21,8 +21,8 @@ class BookingRequestService {
       const query = { is_deleted: false, ...filters };
 
       const result = await BookingRequest.find(query).populate({
-        path: "plan_id",
-        select: "package_name _id",
+        path: 'plan_id',
+        select: 'package_name _id',
       });
       const count = await BookingRequest.countDocuments(query);
 
@@ -35,7 +35,7 @@ class BookingRequestService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -47,17 +47,17 @@ class BookingRequestService {
             country: data.country, // Country field from the schema
             check_in_date: new Date(data.check_in_date)
               .toISOString()
-              .split("T")[0], // Format check-in date to YYYY-MM-DD
+              .split('T')[0], // Format check-in date to YYYY-MM-DD
             check_out_date: new Date(data.check_out_date)
               .toISOString()
-              .split("T")[0], // Format check-out date to YYYY-MM-DD
+              .split('T')[0], // Format check-out date to YYYY-MM-DD
             plan_id: data.plan_id?._id || null, // Including plan ID, if available
             plan_name: data.plan_id?.package_name || null, // Including plan name, if available
           })),
           dataCount: count, // Total count of data
           dataPerPage: itemsPerPage, // Number of items per page
           currentPaginationIndex: 1, // Current page index, default to 1
-          message: "Data Returned.", // Response message
+          message: 'Data Returned.', // Response message
         };
         return response;
       }
@@ -87,9 +87,9 @@ class BookingRequestService {
       // Add search logic if a search term is provided
       if (search) {
         query.$or = [
-          { name: { $regex: search, $options: "i" } }, // Search by name (case-insensitive)
-          { phone: { $regex: search, $options: "i" } }, // Search by phone
-          { email: { $regex: search, $options: "i" } }, // Search by email
+          { name: { $regex: search, $options: 'i' } }, // Search by name (case-insensitive)
+          { phone: { $regex: search, $options: 'i' } }, // Search by phone
+          { email: { $regex: search, $options: 'i' } }, // Search by email
         ];
       }
 
@@ -107,7 +107,7 @@ class BookingRequestService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "No matching records found.",
+          message: 'No matching records found.',
         };
       } else {
         response = {
@@ -116,7 +116,7 @@ class BookingRequestService {
             name: data.name, // Name of the requester
             phone: data.phone, // Phone number
             email: data.email, // Email address
-            callDate: data.callDate.toISOString().split("T")[0], // Format date to YYYY-MM-DD
+            callDate: data.callDate.toISOString().split('T')[0], // Format date to YYYY-MM-DD
 
             enquiryType: data.enquiryType, // Enquiry type
             enquiryDescription: data.enquiryDescription, // Enquiry description
@@ -125,7 +125,7 @@ class BookingRequestService {
           dataCount: count, // Total count of matching records
           dataPerPage: itemsPerPage, // Items per page
           currentPaginationIndex: page, // Current page index
-          message: "Data returned successfully.", // Response message
+          message: 'Data returned successfully.', // Response message
         };
       }
 

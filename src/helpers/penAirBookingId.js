@@ -1,5 +1,5 @@
-const xml2js = require("xml2js");
-const ApiRequestLogService = require("../services/ApiRequestLogService");
+const xml2js = require('xml2js');
+const ApiRequestLogService = require('../services/ApiRequestLogService');
 
 async function penAirBookingId(xmlString, browserData, ip) {
   try {
@@ -9,8 +9,8 @@ async function penAirBookingId(xmlString, browserData, ip) {
 
     // Access the FolderCreateClientResult
     const folderCreateClientResult =
-      result["soap:Envelope"]["soap:Body"][0]["FolderCreateClientResponse"][0][
-        "FolderCreateClientResult"
+      result['soap:Envelope']['soap:Body'][0]['FolderCreateClientResponse'][0][
+        'FolderCreateClientResult'
       ][0];
 
     // Parse the inner XML contained in FolderCreateClientResult
@@ -29,7 +29,7 @@ async function penAirBookingId(xmlString, browserData, ip) {
     // });
 
     // Extract the OrderNo
-    const orderNo = innerResult["FolderCreateResponse"]["OrderNo"][0];
+    const orderNo = innerResult['FolderCreateResponse']['OrderNo'][0];
     return orderNo;
   } catch (error) {
     // await ApiRequestLogService.create({
@@ -40,7 +40,7 @@ async function penAirBookingId(xmlString, browserData, ip) {
     //   success_status: false,
     //   endpoint: "PenAir creation",
     // });
-    console.error("Error parsing XML:", error);
+    console.error('Error parsing XML:', error);
     return null;
   }
 }

@@ -1,12 +1,12 @@
-const { query } = require("express");
-const Country = require("../models/Country");
-const City = require("../models/City");
-const Airport = require("../models/Airport");
-const Airline = require("../models/Airline");
-const Location = require("../models/Location");
-const InternationalAirport = require("../models/InternationlAirport");
-const HotelDestination = require("../models/HotelDestination");
-const ActivityDestination = require("../models/ActivityDestination");
+const { query } = require('express');
+const Country = require('../models/Country');
+const City = require('../models/City');
+const Airport = require('../models/Airport');
+const Airline = require('../models/Airline');
+const Location = require('../models/Location');
+const InternationalAirport = require('../models/InternationlAirport');
+const HotelDestination = require('../models/HotelDestination');
+const ActivityDestination = require('../models/ActivityDestination');
 
 class CountryService {
   async getList(data) {
@@ -14,7 +14,7 @@ class CountryService {
       const search = data.search;
       const query = {};
       if (search) {
-        query["$or"] = [{ name: { $regex: search, $options: "i" } }];
+        query['$or'] = [{ name: { $regex: search, $options: 'i' } }];
       }
       const result = await Country.find(query);
       return result.map((country) => ({
@@ -34,9 +34,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { country: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { country: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
       const result = await City.find(query);
@@ -57,12 +57,12 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { name: { $regex: search, $options: "i" } },
-          { city: { $regex: search, $options: "i" } },
-          { state: { $regex: search, $options: "i" } },
-          { country: { $regex: search, $options: "i" } },
-          { code: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { name: { $regex: search, $options: 'i' } },
+          { city: { $regex: search, $options: 'i' } },
+          { state: { $regex: search, $options: 'i' } },
+          { country: { $regex: search, $options: 'i' } },
+          { code: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -71,11 +71,11 @@ class CountryService {
         _id: airPort._id,
         name:
           airPort.name +
-          "-" +
+          '-' +
           airPort.code +
-          "-" +
+          '-' +
           airPort.city +
-          "-" +
+          '-' +
           airPort.country,
       }));
     } catch (error) {
@@ -91,9 +91,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -115,12 +115,12 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { name: { $regex: search, $options: "i" } },
-          { city: { $regex: search, $options: "i" } },
-          { state: { $regex: search, $options: "i" } },
-          { country: { $regex: search, $options: "i" } },
-          { code: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { name: { $regex: search, $options: 'i' } },
+          { city: { $regex: search, $options: 'i' } },
+          { state: { $regex: search, $options: 'i' } },
+          { country: { $regex: search, $options: 'i' } },
+          { code: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -142,9 +142,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -166,9 +166,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -190,9 +190,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -213,12 +213,12 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
-          { city: { $regex: search, $options: "i" } },
-          { country: { $regex: search, $options: "i" } },
-          { iata: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
+          { city: { $regex: search, $options: 'i' } },
+          { country: { $regex: search, $options: 'i' } },
+          { iata: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -239,9 +239,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -262,9 +262,9 @@ class CountryService {
       const query = { ...filters };
 
       if (search) {
-        query["$or"] = [
-          { code: { $regex: search, $options: "i" } },
-          { name: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { code: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
         ];
       }
       const result = await ActivityDestination.find(query);

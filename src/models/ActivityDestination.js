@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require('mongoose');
 
 const ActivityDestinationsSchema = new mongoose.Schema({
   name: {
@@ -16,7 +16,7 @@ const ActivityDestinationsSchema = new mongoose.Schema({
 });
 
 const ActivityDestination = mongoose.model(
-  "ActivityDestination",
+  'ActivityDestination',
   ActivityDestinationsSchema
 );
 

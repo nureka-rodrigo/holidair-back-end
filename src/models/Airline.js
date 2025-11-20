@@ -1,5 +1,5 @@
-const { number } = require("joi");
-const mongoose = require("mongoose");
+const { number } = require('joi');
+const mongoose = require('mongoose');
 
 const AirlineSchema = new mongoose.Schema(
   {
@@ -19,6 +19,6 @@ const AirlineSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Airline = mongoose.model("Airline", AirlineSchema);
+const Airline = mongoose.model('Airline', AirlineSchema);
 
 module.exports = Airline;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const InternationalAirportSchema = new mongoose.Schema({
   name: String,
@@ -17,7 +17,7 @@ const InternationalAirportSchema = new mongoose.Schema({
 });
 
 const InternationalAirport = mongoose.model(
-  "InternationalAirport",
+  'InternationalAirport',
   InternationalAirportSchema
 );
 

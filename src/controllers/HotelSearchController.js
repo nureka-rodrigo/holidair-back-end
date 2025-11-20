@@ -1,20 +1,20 @@
-const getClientIp = require("../helpers/genaralHelper");
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const { getHighestAndLowestPrices } = require("../helpers/hotelSearchHelper");
-const ApiRequestLogService = require("../services/ApiRequestLogService");
-const MarkupPriceService = require("../services/MarkupPriceService");
-const { getPrice } = require("../services/MarkupPriceService");
-const makeHotelApiRequest = require("../utils/hotelRequest");
+const getClientIp = require('../helpers/genaralHelper');
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const { getHighestAndLowestPrices } = require('../helpers/hotelSearchHelper');
+const ApiRequestLogService = require('../services/ApiRequestLogService');
+const MarkupPriceService = require('../services/MarkupPriceService');
+const { getPrice } = require('../services/MarkupPriceService');
+const makeHotelApiRequest = require('../utils/hotelRequest');
 
 class HotelSearchController {
   async searchHotels(req, res) {
     const ip = await getClientIp(req);
     try {
       const response = await makeHotelApiRequest(
-        "GET",
-        "hotel-content-api/1.0/hotels",
+        'GET',
+        'hotel-content-api/1.0/hotels',
         req.body.params,
-        ""
+        ''
       );
 
       const hotelIds = response.hotels.map((hotel) => parseInt(hotel.code));
@@ -48,9 +48,9 @@ class HotelSearchController {
       };
 
       const hotelResponse = await makeHotelApiRequest(
-        "POST",
-        "hotel-api/3.0/hotels",
-        "",
+        'POST',
+        'hotel-api/3.0/hotels',
+        '',
         requestBody
       );
 
@@ -82,7 +82,7 @@ class HotelSearchController {
 
       const { highest, lowest } = await getHighestAndLowestPrices(mergedHotels);
 
-      const hotelMarkupPrice = await MarkupPriceService.getPrice("hotel");
+      const hotelMarkupPrice = await MarkupPriceService.getPrice('hotel');
 
       await ApiRequestLogService.create({
         request: req.body.params,
@@ -90,7 +90,7 @@ class HotelSearchController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: true,
-        endpoint: "hotel search",
+        endpoint: 'hotel search',
       });
 
       res.status(200).json({
@@ -108,14 +108,14 @@ class HotelSearchController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: false,
-        endpoint: "hotel search",
+        endpoint: 'hotel search',
       });
       await sendErrorNotificationEmail(
-        "",
+        '',
 
         error,
-        "",
-        "Hotel search API Error"
+        '',
+        'Hotel search API Error'
       );
       res.status(500).json({ error: error });
     }
@@ -124,7 +124,7 @@ class HotelSearchController {
   async getHotelContent(req, res) {
     try {
       const params = `hotel-content-api/1.0/hotels/${req.params.id}/details?language=ENG&useSecondaryLanguage=False`;
-      const response = await makeHotelApiRequest("GET", params);
+      const response = await makeHotelApiRequest('GET', params);
 
       const { checkIn, checkOut, from, to, adults, rooms, children } =
         req.body.params;
@@ -148,9 +148,9 @@ class HotelSearchController {
       };
 
       const hotelResponse = await makeHotelApiRequest(
-        "POST",
-        "hotel-api/3.0/hotels",
-        "",
+        'POST',
+        'hotel-api/3.0/hotels',
+        '',
         requestBody
       );
       const finalResponse = {
@@ -161,11 +161,11 @@ class HotelSearchController {
       res.status(200).json({ data: finalResponse });
     } catch (error) {
       await sendErrorNotificationEmail(
-        "",
+        '',
 
         error,
         error.response.data,
-        "Hotel get API Error"
+        'Hotel get API Error'
       );
       res.status(500).json({ error: error });
     }
@@ -178,16 +178,16 @@ class HotelSearchController {
 
       // Construct the full URL with query parameters
       const queryParams = new URLSearchParams({
-        fields: fields || "all",
-        language: language || "ENG",
+        fields: fields || 'all',
+        language: language || 'ENG',
         from: from || 1,
         to: to || 203,
-        codes: codes || "LK",
+        codes: codes || 'LK',
       }).toString();
 
       // Make API request using makeHotelApiRequest
       const response = await makeHotelApiRequest(
-        "GET",
+        'GET',
         `hotel-content-api/1.0/locations/destinations?${queryParams}`, // Append query parameters directly to the URL
         {}, // No body needed
         {} // No request body
@@ -198,10 +198,10 @@ class HotelSearchController {
     } catch (error) {
       // Handle errors
       await sendErrorNotificationEmail(
-        "",
+        '',
         error,
-        error.response?.data || "No response data",
-        "Country get API Error"
+        error.response?.data || 'No response data',
+        'Country get API Error'
       );
       res.status(500).json({ error: error.message });
     }

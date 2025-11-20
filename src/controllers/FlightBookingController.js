@@ -1,26 +1,26 @@
-const holidayairBookingConfirm = require("../mail/holidayair-booking-confirm");
-const holidayairBookingFailed = require("../mail/holidayair-booking-failed");
-const sendMail = require("../mail/mail");
-const FlightBookingService = require("../services/flight/FlightBookingService");
-const HotelBookingService = require("../services/hotel/HotelBookingService");
-const makeAPIRequest = require("../utils/flightRequest");
-const makeHotelApiRequest = require("../utils/hotelRequest");
-const jwt = require("jsonwebtoken");
+const holidayairBookingConfirm = require('../mail/holidayair-booking-confirm');
+const holidayairBookingFailed = require('../mail/holidayair-booking-failed');
+const sendMail = require('../mail/mail');
+const FlightBookingService = require('../services/flight/FlightBookingService');
+const HotelBookingService = require('../services/hotel/HotelBookingService');
+const makeAPIRequest = require('../utils/flightRequest');
+const makeHotelApiRequest = require('../utils/hotelRequest');
+const jwt = require('jsonwebtoken');
 
-const { User } = require("../models/UserManagement/User");
-const penAirApiRequest = require("../utils/penAirRequest");
-const MarkupService = require("../services/MarkupService");
-const { parseString } = require("xml2js");
-const fs = require("fs");
-const paymentConfirmationRequest = require("../utils/paymantConfirmationRequest");
-const penAirBookingId = require("../helpers/penAirBookingId");
-const holidayairBookingDetails = require("../mail/holidayair-booking-details");
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const sendBookingMail = require("../mail/bookingMail");
-const getClientIp = require("../helpers/genaralHelper");
-const ApiRequestLogService = require("../services/ApiRequestLogService");
-const getLastArrivalTime = require("../helpers/getLastArrivalTime");
-const getLastDepartureDate = require("../helpers/getLastDepartureDate");
+const { User } = require('../models/UserManagement/User');
+const penAirApiRequest = require('../utils/penAirRequest');
+const MarkupService = require('../services/MarkupService');
+const { parseString } = require('xml2js');
+const fs = require('fs');
+const paymentConfirmationRequest = require('../utils/paymantConfirmationRequest');
+const penAirBookingId = require('../helpers/penAirBookingId');
+const holidayairBookingDetails = require('../mail/holidayair-booking-details');
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const sendBookingMail = require('../mail/bookingMail');
+const getClientIp = require('../helpers/genaralHelper');
+const ApiRequestLogService = require('../services/ApiRequestLogService');
+const getLastArrivalTime = require('../helpers/getLastArrivalTime');
+const getLastDepartureDate = require('../helpers/getLastDepartureDate');
 
 class FlightBookingController {
   constructor() {
@@ -33,16 +33,16 @@ class FlightBookingController {
     // try {
     // const ip = await getClientIp(req);
     let decoded;
-    let userId = "";
-    const authToken = req.headers["x-access-token"];
+    let userId = '';
+    const authToken = req.headers['x-access-token'];
     if (authToken) {
       if (
-        authToken.split(" ")[1] !== undefined ||
-        authToken.split(" ")[1] !== null ||
-        authToken.split(" ")[1] !== ""
+        authToken.split(' ')[1] !== undefined ||
+        authToken.split(' ')[1] !== null ||
+        authToken.split(' ')[1] !== ''
       ) {
         decoded = jwt.verify(
-          authToken.split(" ")[1],
+          authToken.split(' ')[1],
           process.env.JWT_SECRET_KEY
         );
         userId = decoded.userId;
@@ -60,7 +60,7 @@ class FlightBookingController {
           first_name: req.body.formData.Pax[0].FirstName,
           last_name: req.body.formData.Pax[0].LastName,
           email: req.body.formData.Email,
-          user_name: req.body.formData.Email.split("@")[0],
+          user_name: req.body.formData.Email.split('@')[0],
         });
         userId = user._id;
       }
@@ -86,8 +86,8 @@ class FlightBookingController {
     // );
     // return res.status(200).json({ data: result });
     const bookingResponse = await makeAPIRequest(
-      "POST",
-      "/flightpnr",
+      'POST',
+      '/flightpnr',
       req.body.formData
     );
 
@@ -95,18 +95,18 @@ class FlightBookingController {
 
     const requestData = req.body.formData;
 
-    let ArrivalDate = "";
-    let ArrivalTime = "";
+    let ArrivalDate = '';
+    let ArrivalTime = '';
 
-    let departDate = "";
+    let departDate = '';
 
-    let departTime = "";
-    let ticketDate = "";
+    let departTime = '';
+    let ticketDate = '';
 
     if (
       bookingResponse &&
       bookingResponse.result &&
-      bookingResponse.result.status === "OK"
+      bookingResponse.result.status === 'OK'
     ) {
       await FlightBookingService.updateBookingConfirmationDetails(
         bookingDetails._id,
@@ -120,7 +120,7 @@ class FlightBookingController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: true,
-        endpoint: "flight booking",
+        endpoint: 'flight booking',
       });
 
       let selectedObject;
@@ -163,50 +163,50 @@ class FlightBookingController {
 
         departDate =
           bookingResponse.result.airSolutions[0].journey[0].airSegments[0].departDatetime.split(
-            " "
+            ' '
           )[0];
         departTime =
           bookingResponse.result.airSolutions[0].journey[0].airSegments[0].departDatetime.split(
-            " "
+            ' '
           )[1];
 
-        ticketDate = new Date().toISOString().split("T")[0];
+        ticketDate = new Date().toISOString().split('T')[0];
       }
 
       // console.log(ArrivalDate);
       // console.log("br", bookingResponse.result);
 
       const dateStr = departDate;
-      const [day, month, year] = dateStr.split("/");
+      const [day, month, year] = dateStr.split('/');
       const formattedDate = `${year}-${month}-${day}`;
 
       const penAir = await penAirApiRequest({
-        TravelDate: "",
+        TravelDate: '',
         FirstName: req.body.formData.Pax[0].FirstName,
         LastName: req.body.formData.Pax[0].LastName,
         Title: req.body.formData.Pax[0].Title,
-        Type: "",
+        Type: '',
         EMail: requestData.Email,
         TelePhone: requestData.ContactNo,
         PassengerName: req.body.formData.Pax[0].FirstName,
 
         TicketNumber: req.body.formData.TicketNumber,
         AirlineId: req.body.formData.AirlineId,
-        VLocator: "",
+        VLocator: '',
         TicketDate: ticketDate,
         IATANumber: req.body.formData.IATANumber,
-        Currency: "GBP",
+        Currency: 'GBP',
         FareSellAmt:
           parseFloat(response.amount) - parseFloat(response.markup_amount),
         FareCommAmt: response.markup_amount,
         TotalSellAmt: response.amount,
-        ValidatingAirlineId: "",
-        TicketType: "",
-        Issuer: "Brightsun",
-        TaxType: "",
-        TaxDescription: "",
-        TaxSellAmt: "",
-        VirtualCardNo: "",
+        ValidatingAirlineId: '',
+        TicketType: '',
+        Issuer: 'Brightsun',
+        TaxType: '',
+        TaxDescription: '',
+        TaxSellAmt: '',
+        VirtualCardNo: '',
         FlightNumber:
           bookingResponse.result.airSolutions[0].journey[0].airSegments[0]
             .flightNumber,
@@ -221,19 +221,19 @@ class FlightBookingController {
         DepartureCityId:
           bookingResponse.result.airSolutions[0].journey[0].airSegments[0]
             .origin,
-        ArrivalCityId: "",
-        DepartureTime: "12:00:00",
-        ArrivalTime: "02:00:00",
-        FareBasis: "",
+        ArrivalCityId: '',
+        DepartureTime: '12:00:00',
+        ArrivalTime: '02:00:00',
+        FareBasis: '',
         DepartureTerminal:
           bookingResponse.result.airSolutions[0].journey[0].airSegments[0]
             .airport[0].originTerminal,
-        ArrivalTerminal: "",
-        FlightTime: "",
+        ArrivalTerminal: '',
+        FlightTime: '',
         Stops: bookingResponse.result.airSolutions[0].journey[0].stop,
-        PCC: "4CHC",
+        PCC: '4CHC',
         BookingId: bookingDetails.booking_id,
-        Provider: "Brightsun",
+        Provider: 'Brightsun',
         PNR: bookingResponse.result.pnrInfo[0].brightsunReference,
       });
 
@@ -252,19 +252,19 @@ class FlightBookingController {
       const dateObj2 = new Date(requestData.returnDate);
 
       // Format the date to YYYY-MM-DD
-      const formattedDate1 = dateObj1.toISOString().split("T")[0];
-      const formattedDate2 = dateObj2.toISOString().split("T")[0];
+      const formattedDate1 = dateObj1.toISOString().split('T')[0];
+      const formattedDate2 = dateObj2.toISOString().split('T')[0];
 
       await sendBookingMail(
         process.env.BOOKING_REQUEST_EMAIL,
-        "Booking request",
+        'Booking request',
         holidayairBookingDetails({
-          titel: "Flight",
+          titel: 'Flight',
           booking_id: bookingDetails.booking_id,
-          penair_id: "",
+          penair_id: '',
           passenger_name:
             req.body.formData.Pax[0].FirstName +
-            " " +
+            ' ' +
             req.body.formData.Pax[0].LastName,
           contact_number: requestData.ContactNo,
           email: requestData.Email,
@@ -277,10 +277,10 @@ class FlightBookingController {
 
       // res.status(200).json({ data: penAirResponse });
       const finalResponse = {
-        status: "OK",
+        status: 'OK',
         flightBookingResponse: bookingResponse,
         bookingResponse: response,
-        data: "",
+        data: '',
       };
       res.status(200).json({ data: finalResponse });
     } else {
@@ -290,7 +290,7 @@ class FlightBookingController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: false,
-        endpoint: "flight booking",
+        endpoint: 'flight booking',
       });
       // await sendMail(
       //   response.email,
@@ -317,25 +317,25 @@ class FlightBookingController {
     const ip = await getClientIp(req);
     // try {
     const response = await makeAPIRequest(
-      "post",
-      "/flightprice",
+      'post',
+      '/flightprice',
       req.body.params
     );
-    if (response.result && response.result.status === "OK") {
+    if (response.result && response.result.status === 'OK') {
       const totalPrice1 = response.result.airSolutions[0].totalPrice;
       const totalPrice2 = response.result.airSolutions[1]
         ? response.result.airSolutions[1].totalPrice
         : 0;
 
-      const flightMarkupPrice = await MarkupService.getMarkupByType("Flight");
+      const flightMarkupPrice = await MarkupService.getMarkupByType('Flight');
 
       // Calculate the new total with commission
       const totalWithCommission1 = flightMarkupPrice
-        ? flightMarkupPrice.amount +
-            response.result.airSolutions[0].totalPrice ?? 0
+        ? (flightMarkupPrice.amount +
+            response.result.airSolutions[0].totalPrice ?? 0)
         : 0;
       const totalWithCommission2 = flightMarkupPrice
-        ? flightMarkupPrice.amount ?? 0
+        ? (flightMarkupPrice.amount ?? 0)
         : 0;
 
       // Add the new property to the air solution object
@@ -343,7 +343,7 @@ class FlightBookingController {
       response.result.airSolutions[0].totalWithCommission =
         totalWithCommission1;
       response.result.airSolutions[0].markupValue = flightMarkupPrice
-        ? flightMarkupPrice.amount ?? 0
+        ? (flightMarkupPrice.amount ?? 0)
         : 0;
       if (response.result.airSolutions[1]) {
         response.result.airSolutions[1].totalWithCommission =
@@ -358,7 +358,7 @@ class FlightBookingController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: true,
-        endpoint: "flight price",
+        endpoint: 'flight price',
       });
 
       res.status(200).json({ data: response });
@@ -369,7 +369,7 @@ class FlightBookingController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: false,
-        endpoint: "flight price",
+        endpoint: 'flight price',
       });
     }
     // } catch (error) {
@@ -395,7 +395,7 @@ class FlightBookingController {
   async updateBookingStatus(req, res) {
     try {
       // Check another string
-      if (req.formData.bookingId.startsWith("F")) {
+      if (req.formData.bookingId.startsWith('F')) {
         const bookingDetails = await FlightBookingService.updateBookingStatus(
           req.params.bookingId,
           req.body
@@ -414,8 +414,8 @@ class FlightBookingController {
             process.env.HOLIDAY_AIR_APPLICATION_ACCESS_MODE,
         };
         const flightDetailsResponse = await makeAPIRequest(
-          "POST",
-          "/Getpnr",
+          'POST',
+          '/Getpnr',
           pnrReqParams
         );
 
@@ -428,7 +428,7 @@ class FlightBookingController {
 
         const dateParts =
           flightDetailsResponse.result.airSolutions[0].journey[0].airSegments[0].departDate.split(
-            " "
+            ' '
           );
 
         const day = dateParts[1];
@@ -448,9 +448,9 @@ class FlightBookingController {
 
         await sendBookingMail(
           bookingDetails.email,
-          "Booking confirmation",
+          'Booking confirmation',
           holidayairBookingConfirm({
-            titel: "Flight",
+            titel: 'Flight',
             booking_id: bookingDetails.booking_id,
             status: true,
             from: bookingDetails.flight_data.airSolutions[0].journey[0]
@@ -463,23 +463,23 @@ class FlightBookingController {
             arrivaldate:
               bookingDetails.flight_data.airSolutions[0].journey[0]
                 .airSegments[1].arrivalDatetime,
-            location: "TEST",
+            location: 'TEST',
             total: bookingDetails.amount,
             paxName: mainPaxName,
             destination:
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[destinationLength - 1].destinationAirportName +
-              " - " +
+              ' - ' +
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[destinationLength - 1].destinationAirportCity +
-              " - " +
+              ' - ' +
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[destinationLength - 1].destinationAirportCountry,
-            departureDate: date.toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
+            departureDate: date.toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
             }),
             airline1:
               flightDetailsResponse.result.airSolutions[0].journey[0]
@@ -493,10 +493,10 @@ class FlightBookingController {
             originAirport1:
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[0].originAirportName +
-              " (" +
+              ' (' +
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[0].origin +
-              ") -" +
+              ') -' +
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[0].originAirportCity,
             depTerminal1:
@@ -517,10 +517,10 @@ class FlightBookingController {
             arrivalCity1:
               flightDetailsResponse.result.airSolutions[0].journey[0]
                 .airSegments[1].airport[0].airportName +
-              " " +
+              ' ' +
               bookingDetails.flight_data.airSolutions[0].journey[0]
                 .airSegments[1].airport[0].city.cityName +
-              " " +
+              ' ' +
               bookingDetails.flight_data.airSolutions[0].journey[0]
                 .airSegments[1].airport[0].country.countryName,
           })
@@ -546,16 +546,16 @@ class FlightBookingController {
           bookingConfirmationDetails: flightDetailsResponse,
         };
         res.status(200).json({ data: finalResponse });
-      } else if (req.params.bookingId.startsWith("H")) {
+      } else if (req.params.bookingId.startsWith('H')) {
         const bookingDetails = await HotelBookingService.updateBookingStatus(
           req.params.bookingId,
           req.body
         );
         const bookingDetailsResponse = await makeHotelApiRequest(
-          "GET",
+          'GET',
           `hotel-api/3.0/bookings/${bookingDetails.reference}`,
-          "",
-          ""
+          '',
+          ''
         );
         const finalResponse = {
           bookingDetails: bookingDetails,
@@ -570,11 +570,11 @@ class FlightBookingController {
       res.status(200).json({ data: bookingDetails });
     } catch (error) {
       await sendErrorNotificationEmail(
-        "",
+        '',
 
         error,
-        "",
-        "Brightsun Flight booking ticket API Error"
+        '',
+        'Brightsun Flight booking ticket API Error'
       );
       res.status(500).json({ error: error });
     }
@@ -596,8 +596,8 @@ class FlightBookingController {
       const dateObj2 = new Date(requestData.returnDate);
 
       // Format the date to YYYY-MM-DD
-      const formattedDate1 = dateObj1.toISOString().split("T")[0];
-      const formattedDate2 = dateObj2.toISOString().split("T")[0];
+      const formattedDate1 = dateObj1.toISOString().split('T')[0];
+      const formattedDate2 = dateObj2.toISOString().split('T')[0];
 
       // const penAir = await penAirApiRequest({
       //   TravelDate: "",
@@ -647,7 +647,7 @@ class FlightBookingController {
       //   PNR: bookingDetails.booking_id,
       // });
 
-      console.log("pen", penAir);
+      console.log('pen', penAir);
       const orderNumber = await penAirBookingId(penAir);
       await FlightBookingService.updatePenAirOderId(
         bookingDetails._id,
@@ -656,13 +656,13 @@ class FlightBookingController {
 
       await sendBookingMail(
         process.env.BOOKING_REQUEST_EMAIL,
-        "Booking request",
+        'Booking request',
         holidayairBookingDetails({
-          titel: "Flight",
+          titel: 'Flight',
           booking_id: bookingDetails.booking_id,
           penair_id: orderNumber,
           passenger_name:
-            req.body.Pax[0].FirstName + " " + req.body.Pax[0].LastName,
+            req.body.Pax[0].FirstName + ' ' + req.body.Pax[0].LastName,
           contact_number: requestData.ContactNo,
           email: requestData.Email,
           from: req.body.from,

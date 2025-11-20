@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const ApiRequestLogSchema = new mongoose.Schema(
   {
@@ -43,6 +43,6 @@ const ApiRequestLogSchema = new mongoose.Schema(
   { timestamps: true } // Automatically adds `createdAt` and `updatedAt`
 );
 
-const ApiRequestLog = mongoose.model("ApiRequestLog", ApiRequestLogSchema);
+const ApiRequestLog = mongoose.model('ApiRequestLog', ApiRequestLogSchema);
 
 module.exports = ApiRequestLog;

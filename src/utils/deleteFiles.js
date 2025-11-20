@@ -26,5 +26,4 @@ function deleteFiles(files, callback) {
   });
 }
 
-
 exports.deleteFiles = deleteFiles;

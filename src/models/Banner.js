@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BannerSchema = new mongoose.Schema(
   {
@@ -22,6 +22,6 @@ const BannerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Banner = mongoose.model("Banner", BannerSchema);
+const Banner = mongoose.model('Banner', BannerSchema);
 
 module.exports = Banner;

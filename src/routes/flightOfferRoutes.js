@@ -1,14 +1,14 @@
-const express = require("express");
-const FlightOfferController = require("../controllers/FlightOfferController");
+const express = require('express');
+const FlightOfferController = require('../controllers/FlightOfferController');
 const router = express.Router();
 
-router.post("/", FlightOfferController.create);
-router.put("/:id", FlightOfferController.update);
-router.get("/get-list/:type", FlightOfferController.getAllList);
-router.get("/get-flight-list/:text", FlightOfferController.getFlightList);
-router.get("/", FlightOfferController.getAll);
-router.get("/:id", FlightOfferController.get);
-router.post("/list", FlightOfferController.getList);
-router.delete("/:id", FlightOfferController.delete);
+router.post('/', FlightOfferController.create);
+router.put('/:id', FlightOfferController.update);
+router.get('/get-list/:type', FlightOfferController.getAllList);
+router.get('/get-flight-list/:text', FlightOfferController.getFlightList);
+router.get('/', FlightOfferController.getAll);
+router.get('/:id', FlightOfferController.get);
+router.post('/list', FlightOfferController.getList);
+router.delete('/:id', FlightOfferController.delete);
 
 module.exports = router;

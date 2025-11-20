@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const PackageSchema = new mongoose.Schema(
   {
     country_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Country",
+      ref: 'Country',
     },
     city_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "City",
+      ref: 'City',
     },
     currency: {
       type: String,
@@ -120,6 +120,6 @@ const PackageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Package = mongoose.model("Package", PackageSchema);
+const Package = mongoose.model('Package', PackageSchema);
 
 module.exports = Package;

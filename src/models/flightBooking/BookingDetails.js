@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BookingDetailsSchema = new mongoose.Schema(
   {
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     booking_id: {
       type: String,
@@ -29,7 +29,7 @@ const BookingDetailsSchema = new mongoose.Schema(
     },
     booking_status: {
       type: String,
-      default: "booking-created",
+      default: 'booking-created',
     },
     key: {
       type: String,
@@ -71,6 +71,6 @@ const BookingDetailsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const BookingDetails = mongoose.model("BookingDetails", BookingDetailsSchema);
+const BookingDetails = mongoose.model('BookingDetails', BookingDetailsSchema);
 
 module.exports = BookingDetails;

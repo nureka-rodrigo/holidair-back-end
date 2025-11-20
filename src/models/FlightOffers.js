@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const FlightOfferSchema = new mongoose.Schema(
   {
     destination_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Destination",
+      ref: 'Destination',
     },
     from_location: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Airport",
+      ref: 'Airport',
     },
     to_location: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Airport",
+      ref: 'Airport',
     },
     price: {
       type: String,
     },
     airline_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Airline",
+      ref: 'Airline',
     },
     airline_baggage: {
       type: String,
@@ -47,6 +47,6 @@ const FlightOfferSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const FlightOffer = mongoose.model("FlightOffer", FlightOfferSchema);
+const FlightOffer = mongoose.model('FlightOffer', FlightOfferSchema);
 
 module.exports = FlightOffer;

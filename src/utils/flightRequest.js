@@ -1,6 +1,6 @@
-const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 // Base URL
 const baseURL = process.env.FLIGHT_URL;
@@ -9,7 +9,7 @@ async function makeAPIRequest(method, endpoint, body) {
   try {
     const url = `${baseURL}${endpoint}`;
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       // Add any additional headers if needed
     };
 
@@ -18,9 +18,9 @@ async function makeAPIRequest(method, endpoint, body) {
     const password = process.env.FLIGHT_API_PASSWORD;
 
     if (username && password) {
-      headers["Authorization"] = `Basic ${Buffer.from(
+      headers['Authorization'] = `Basic ${Buffer.from(
         `${username}:${password}`
-      ).toString("base64")}`;
+      ).toString('base64')}`;
     }
 
     const options = {
@@ -34,7 +34,7 @@ async function makeAPIRequest(method, endpoint, body) {
     console.log(response);
     return response.data;
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return error;
   }
 }

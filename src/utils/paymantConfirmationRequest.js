@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios');
 async function paymentConfirmationRequest(data) {
   try {
     const { PNR, OrderNumber, BookingId, Amount, TransactionId, TaxId } = data;
@@ -36,10 +36,10 @@ async function paymentConfirmationRequest(data) {
     // console.log(xmlData);
 
     const response = await axios({
-      method: "POST",
-      url: "https://penairdemo17.pensupport.co.uk/PenAIR/Penairdemo17/WebServices/FolderOrder2Cash/FolderOrder2Cash.asmx",
+      method: 'POST',
+      url: 'https://penairdemo17.pensupport.co.uk/PenAIR/Penairdemo17/WebServices/FolderOrder2Cash/FolderOrder2Cash.asmx',
       headers: {
-        "Content-Type": "text/xml",
+        'Content-Type': 'text/xml',
       },
       data: xmlData,
     });
@@ -49,7 +49,7 @@ async function paymentConfirmationRequest(data) {
     return response.data;
   } catch (error) {
     fs.writeFileSync(
-      "error_log.txt",
+      'error_log.txt',
       `Error: ${error.message}\nStack: ${error.stack}`
     );
     return error;

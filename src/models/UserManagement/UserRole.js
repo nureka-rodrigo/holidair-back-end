@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const UserRoleSchema = new mongoose.Schema(
   {
@@ -13,7 +13,7 @@ const UserRoleSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model("UserRole", UserRoleSchema);
+module.exports = mongoose.model('UserRole', UserRoleSchema);

@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const PaxDetailSchema = new mongoose.Schema(
   {
     flight_booking_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "FlightBooking",
+      ref: 'FlightBooking',
     },
     title: { type: String },
     first_name: { type: String },
@@ -18,6 +18,6 @@ const PaxDetailSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const PaxDetail = mongoose.model("PaxDetail", PaxDetailSchema);
+const PaxDetail = mongoose.model('PaxDetail', PaxDetailSchema);
 
 module.exports = PaxDetail;

@@ -1,6 +1,6 @@
-const { findOneAndDelete } = require("../models/Banner");
-const FlightOffer = require("../models/FlightOffers");
-const formatCurrency = require("../utils/formatCurrency");
+const { findOneAndDelete } = require('../models/Banner');
+const FlightOffer = require('../models/FlightOffers');
+const formatCurrency = require('../utils/formatCurrency');
 
 class FlightOfferService {
   async create(data) {
@@ -23,20 +23,20 @@ class FlightOfferService {
     try {
       return await FlightOffer.findById(id)
         .populate({
-          path: "destination_id",
-          select: "name _id image_url", // Select only name field of the brand object
+          path: 'destination_id',
+          select: 'name _id image_url', // Select only name field of the brand object
         })
         .populate({
-          path: "to_location",
-          select: "name _id", // Select only name field of the brand object
+          path: 'to_location',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "from_location",
-          select: "name _id", // Select only name field of the brand object
+          path: 'from_location',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "airline_id",
-          select: "name _id", // Select only name field of the brand object
+          path: 'airline_id',
+          select: 'name _id', // Select only name field of the brand object
         });
     } catch (error) {
       throw error;
@@ -64,20 +64,20 @@ class FlightOfferService {
 
       const result = await FlightOffer.find(query)
         .populate({
-          path: "destination_id",
-          select: "name _id", // Select only name field of the brand object
+          path: 'destination_id',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "to_location",
-          select: "name _id", // Select only name field of the brand object
+          path: 'to_location',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "from_location",
-          select: "name _id", // Select only name field of the brand object
+          path: 'from_location',
+          select: 'name _id', // Select only name field of the brand object
         })
         .populate({
-          path: "airline_id",
-          select: "name _id", // Select only name field of the brand object
+          path: 'airline_id',
+          select: 'name _id', // Select only name field of the brand object
         });
       const count = await FlightOffer.countDocuments(query);
 
@@ -89,7 +89,7 @@ class FlightOfferService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -107,7 +107,7 @@ class FlightOfferService {
           dataCount: result.length,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       }
       return response;
@@ -141,20 +141,20 @@ class FlightOfferService {
           .sort({ _id: -1 }) // Sort in descending order based on _id to get the latest entries first
           .limit(4)
           .populate({
-            path: "destination_id",
-            select: "name _id image_url", // Select only name field of the brand object
+            path: 'destination_id',
+            select: 'name _id image_url', // Select only name field of the brand object
           })
           .populate({
-            path: "to_location",
-            select: "name _id", // Select only name field of the brand object
+            path: 'to_location',
+            select: 'name _id', // Select only name field of the brand object
           })
           .populate({
-            path: "from_location",
-            select: "name _id", // Select only name field of the brand object
+            path: 'from_location',
+            select: 'name _id', // Select only name field of the brand object
           })
           .populate({
-            path: "airline_id",
-            select: "name _id logo", // Select only name field of the brand object
+            path: 'airline_id',
+            select: 'name _id logo', // Select only name field of the brand object
           });
         return result.map((offer) => ({
           id: offer._id,
@@ -176,20 +176,20 @@ class FlightOfferService {
         };
         const result = await FlightOffer.find(query)
           .populate({
-            path: "destination_id",
-            select: "name _id image_url", // Select only name field of the brand object
+            path: 'destination_id',
+            select: 'name _id image_url', // Select only name field of the brand object
           })
           .populate({
-            path: "to_location",
-            select: "name _id", // Select only name field of the brand object
+            path: 'to_location',
+            select: 'name _id', // Select only name field of the brand object
           })
           .populate({
-            path: "from_location",
-            select: "name _id", // Select only name field of the brand object
+            path: 'from_location',
+            select: 'name _id', // Select only name field of the brand object
           })
           .populate({
-            path: "airline_id",
-            select: "name _id logo", // Select only name field of the brand object
+            path: 'airline_id',
+            select: 'name _id logo', // Select only name field of the brand object
           });
         return result.map((offer) => ({
           id: offer._id,
@@ -216,20 +216,20 @@ class FlightOfferService {
     };
     const result = await FlightOffer.find(query)
       .populate({
-        path: "destination_id",
-        select: "name _id image_url", // Select only name field of the brand object
+        path: 'destination_id',
+        select: 'name _id image_url', // Select only name field of the brand object
       })
       .populate({
-        path: "to_location",
-        select: "name _id", // Select only name field of the brand object
+        path: 'to_location',
+        select: 'name _id', // Select only name field of the brand object
       })
       .populate({
-        path: "from_location",
-        select: "name _id", // Select only name field of the brand object
+        path: 'from_location',
+        select: 'name _id', // Select only name field of the brand object
       })
       .populate({
-        path: "airline_id",
-        select: "name _id logo", // Select only name field of the brand object
+        path: 'airline_id',
+        select: 'name _id logo', // Select only name field of the brand object
       });
     return result.map((offer) => ({
       id: offer._id,

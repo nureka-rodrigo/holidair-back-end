@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const FlightCustomerAddressSchema = new mongoose.Schema(
   {
     flight_booking_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "FlightBooking",
+      ref: 'FlightBooking',
     },
     city_code: {
       type: String,
@@ -41,7 +41,7 @@ const FlightCustomerAddressSchema = new mongoose.Schema(
 );
 
 const FlightCustomerAddress = mongoose.model(
-  "FlightCustomerAddress",
+  'FlightCustomerAddress',
   FlightCustomerAddressSchema
 );
 

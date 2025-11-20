@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
-const axios = require("axios");
-const crypto = require("crypto");
-const Country = require("../src/models/Country");
-const ActivityDestination = require("../src/models/ActivityDestination");
+const mongoose = require('mongoose');
+const axios = require('axios');
+const crypto = require('crypto');
+const Country = require('../src/models/Country');
+const ActivityDestination = require('../src/models/ActivityDestination');
 
 const database = process.env.DBNAME;
-const mongoURI = "mongodb://127.0.0.1:27017/" + database;
+const mongoURI = 'mongodb://127.0.0.1:27017/' + database;
 
 async function connectToDatabase() {
   try {
@@ -13,9 +13,9 @@ async function connectToDatabase() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Connected to MongoDB successfully");
+    console.log('Connected to MongoDB successfully');
   } catch (error) {
-    console.error("Failed to connect to MongoDB:", error.message);
+    console.error('Failed to connect to MongoDB:', error.message);
     process.exit(1);
   }
 }
@@ -23,12 +23,12 @@ async function connectToDatabase() {
 async function fetchDestinationsByCountry() {
   try {
     const countries = await Country.find();
-    console.log("Fetched destinations:", countries);
+    console.log('Fetched destinations:', countries);
     const dest = await ActivityDestination.find();
-    console.log("Fetched destinations:", dest);
+    console.log('Fetched destinations:', dest);
   } catch (error) {
     console.error(
-      "An error occurred while fetching destinations:",
+      'An error occurred while fetching destinations:',
       error.message
     );
   }

@@ -84,8 +84,8 @@ async function getUniqueAirports(arr) {
 }
 
 async function getAirportCodes(data) {
-  let origin = "";
-  let finalDestination = "";
+  let origin = '';
+  let finalDestination = '';
 
   if (data.length > 0) {
     // Get the journey (assumed to be one-way)
@@ -111,7 +111,7 @@ async function getAdultPaxAmountRange(activities) {
     if (activity.amountsFrom) {
       activity.amountsFrom.forEach((amountObj) => {
         // Filter for 'ADULT' pax type
-        if (amountObj.paxType === "ADULT") {
+        if (amountObj.paxType === 'ADULT') {
           // Update highest and lowest amounts
           if (amountObj.amount > highestAmount) {
             highestAmount = amountObj.amount;

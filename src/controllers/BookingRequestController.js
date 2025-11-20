@@ -1,80 +1,80 @@
-const callMeRequest = require("../mail/call-me-request");
-const holidayairBookingDetails = require("../mail/holidayair-booking-details");
-const holidayairContactusRequest = require("../mail/holidayair-contactus-request");
-const sendMail = require("../mail/mail");
-const BannerService = require("../services/BannerService");
-const BookingRequestService = require("../services/BookingRequestService");
-const MarkupService = require("../services/MarkupService");
+const callMeRequest = require('../mail/call-me-request');
+const holidayairBookingDetails = require('../mail/holidayair-booking-details');
+const holidayairContactusRequest = require('../mail/holidayair-contactus-request');
+const sendMail = require('../mail/mail');
+const BannerService = require('../services/BannerService');
+const BookingRequestService = require('../services/BookingRequestService');
+const MarkupService = require('../services/MarkupService');
 
 class BookingRequestController {
   async create(req, res) {
     try {
       const response = await BookingRequestService.create(req.body);
-      res.status(201).json({ message: "New Review created", data: response });
+      res.status(201).json({ message: 'New Review created', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async getList(req, res) {
     try {
       const response = await BookingRequestService.list(req.body);
-      res.status(200).json({ message: "", data: response });
+      res.status(200).json({ message: '', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async markupList(req, res) {
     try {
       const response = await MarkupService.list(req.body);
-      res.status(200).json({ message: "", data: response });
+      res.status(200).json({ message: '', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async contactUs(req, res) {
     try {
       await sendMail(
-        "webbookings@holidayair.com",
-        "",
-        "Contact us request",
+        'webbookings@holidayair.com',
+        '',
+        'Contact us request',
         holidayairContactusRequest({
-          titel: "Contact",
-          booking_id: "N/A",
-          penair_id: "N/A",
+          titel: 'Contact',
+          booking_id: 'N/A',
+          penair_id: 'N/A',
           passenger_name: req.body.name,
           contact_number: req.body.phone,
           email: req.body.phone,
-          from: "N/A",
-          to: "N/A",
+          from: 'N/A',
+          to: 'N/A',
           message: req.body.message,
-          departuredate: "N/A",
-          arrivaldate: "N/A",
+          departuredate: 'N/A',
+          arrivaldate: 'N/A',
         })
       );
-      res.status(201).json({ message: "", data: "" });
+      res.status(201).json({ message: '', data: '' });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async callMeRequest(req, res) {
     try {
-      if (req.body.enquiryType == "") {
-        req.body.enquiryType = "general";
+      if (req.body.enquiryType == '') {
+        req.body.enquiryType = 'general';
       }
 
       const response = await BookingRequestService.contactMeCreate(req.body);
       await sendMail(
-        "webbookings@holidayair.com",
-        "",
-        "Call me request",
+        'webbookings@holidayair.com',
+        '',
+        'Call me request',
         callMeRequest({
-          titel: "Call Me",
-          booking_id: "N/A",
-          penair_id: "N/A",
+          titel: 'Call Me',
+          booking_id: 'N/A',
+          penair_id: 'N/A',
           passenger_name: req.body.name,
           contact_number: req.body.phone,
           email: req.body.email,
@@ -87,18 +87,18 @@ class BookingRequestController {
       );
       res
         .status(201)
-        .json({ message: "New Call me request created", data: response });
+        .json({ message: 'New Call me request created', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async callMeList(req, res) {
     try {
       const response = await BookingRequestService.callMeList(req.body);
-      res.status(200).json({ message: "", data: response });
+      res.status(200).json({ message: '', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 }

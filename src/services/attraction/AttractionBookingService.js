@@ -1,5 +1,5 @@
-const AttractionBookingDetail = require("../../models/attractionBooking/AttractionBookingDetail");
-const AttractionPaxDetail = require("../../models/attractionBooking/AttractionPaxDetail");
+const AttractionBookingDetail = require('../../models/attractionBooking/AttractionBookingDetail');
+const AttractionPaxDetail = require('../../models/attractionBooking/AttractionPaxDetail');
 
 class AttractionBookingService {
   async create(data) {

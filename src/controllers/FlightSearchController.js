@@ -1,4 +1,4 @@
-const { date } = require("joi");
+const { date } = require('joi');
 
 const {
   getStopValues,
@@ -7,33 +7,33 @@ const {
   getUniqueTotalFlightDurations,
   getHighestAndLowestPrices,
   getAirportCodes,
-} = require("../helpers/flightSearchHelper");
-const makeAPIRequest = require("../utils/flightRequest");
-const { getPrice } = require("../services/MarkupPriceService");
-const MarkupPriceService = require("../services/MarkupPriceService");
-const MarkupService = require("../services/MarkupService");
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const ApiRequestLogService = require("../services/ApiRequestLogService");
-const getClientIp = require("../helpers/genaralHelper");
+} = require('../helpers/flightSearchHelper');
+const makeAPIRequest = require('../utils/flightRequest');
+const { getPrice } = require('../services/MarkupPriceService');
+const MarkupPriceService = require('../services/MarkupPriceService');
+const MarkupService = require('../services/MarkupService');
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const ApiRequestLogService = require('../services/ApiRequestLogService');
+const getClientIp = require('../helpers/genaralHelper');
 
 class FlightSearchController {
   async searchFlights(req, res) {
     const ip = await getClientIp(req);
     try {
       const response = await makeAPIRequest(
-        "post",
-        "/flightsearch",
+        'post',
+        '/flightsearch',
         req.body.params
       );
 
-      if (response.result && response.result.status === "OK") {
+      if (response.result && response.result.status === 'OK') {
         await ApiRequestLogService.create({
           request: req.body.params,
           response: JSON.stringify(response),
           browserData: req.body.browserData,
           ip: ip,
           success_status: true,
-          endpoint: "flight search",
+          endpoint: 'flight search',
         });
 
         const { highest, lowest } = await getHighestAndLowestPrices(
@@ -52,7 +52,7 @@ class FlightSearchController {
           response.result.airSolutions
         );
 
-        const flightMarkupPrice = await MarkupService.getMarkupByType("Flight");
+        const flightMarkupPrice = await MarkupService.getMarkupByType('Flight');
 
         const responseData = {
           flightResults: response.result.airSolutions,
@@ -77,9 +77,9 @@ class FlightSearchController {
           browserData: req.body.browserData,
           ip: ip,
           success_status: false,
-          endpoint: "flight search",
+          endpoint: 'flight search',
         });
-        res.status(500).json({ error: "API ERROR" });
+        res.status(500).json({ error: 'API ERROR' });
       }
     } catch (error) {
       await ApiRequestLogService.create({
@@ -88,7 +88,7 @@ class FlightSearchController {
         browserData: req.body.browserData,
         ip: ip,
         success_status: false,
-        endpoint: "flight search",
+        endpoint: 'flight search',
       });
       res.status(500).json({ error: error });
     }
@@ -98,7 +98,7 @@ class FlightSearchController {
     // try {
     let airportDetails = [];
     const response = await makeAPIRequest(
-      "get",
+      'get',
       `/AutoComplete/${req.params.text}`
     );
 
@@ -151,11 +151,11 @@ class FlightSearchController {
 
   async getFareRules(req, res) {
     try {
-      const response = await makeAPIRequest("POST", "/FareRule", req.body);
+      const response = await makeAPIRequest('POST', '/FareRule', req.body);
 
       res.status(200).json({ data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error " });
+      res.status(500).json({ error: 'Internal server error ' });
     }
   }
 }

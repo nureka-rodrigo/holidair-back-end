@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const CallMeRequestSchema = new mongoose.Schema(
   {
@@ -30,13 +30,13 @@ const CallMeRequestSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: [
-        "general",
-        "flight",
-        "hotel",
-        "package",
-        "website",
-        "transaction",
-        "others",
+        'general',
+        'flight',
+        'hotel',
+        'package',
+        'website',
+        'transaction',
+        'others',
       ], // List of allowed enquiry types
     },
     enquiryDescription: {
@@ -46,6 +46,6 @@ const CallMeRequestSchema = new mongoose.Schema(
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
 
-const CallMeRequest = mongoose.model("CallMeRequest", CallMeRequestSchema);
+const CallMeRequest = mongoose.model('CallMeRequest', CallMeRequestSchema);
 
 module.exports = CallMeRequest;

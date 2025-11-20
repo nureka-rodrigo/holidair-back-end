@@ -65,7 +65,7 @@ module.exports = (errorDetails) => {
             <p><strong>Timestamp:</strong> ${errorDetails.timestamp}</p>
             <hr>
             <p><strong>Stack Trace:</strong></p>
-            <pre>${errorDetails.stack || "No stack trace available"}</pre>
+            <pre>${errorDetails.stack || 'No stack trace available'}</pre>
           </div>
           <div class="footer">
             <p>This is an automated notification. Please take appropriate action.</p>

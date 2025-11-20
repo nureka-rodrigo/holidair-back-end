@@ -8,9 +8,9 @@ const userSchema = Joi.object({
   EMP_number: Joi.number(),
   address: Joi.string().required(),
   user_role_id: Joi.string().required(),
-//  status: Joi.boolean(),
- // created_at: Joi.date(),
- // updated_at: Joi.date(),
+  //  status: Joi.boolean(),
+  // created_at: Joi.date(),
+  // updated_at: Joi.date(),
 });
 
 module.exports = { userSchema };

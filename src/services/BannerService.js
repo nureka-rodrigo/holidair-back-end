@@ -1,4 +1,4 @@
-const Banner = require("../models/Banner");
+const Banner = require('../models/Banner');
 
 class BannerService {
   async create(data) {
@@ -56,20 +56,20 @@ class BannerService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
           data: result.map((banner) => ({
             _id: banner._id,
-            text_one: banner.text_one.substring(0, 3).trimEnd() + "...",
-            text_two: banner.text_two.substring(0, 3).trimEnd() + "...",
+            text_one: banner.text_one.substring(0, 3).trimEnd() + '...',
+            text_two: banner.text_two.substring(0, 3).trimEnd() + '...',
             banner_url: banner.banner_url,
           })),
           dataCount: count,
           dataPerPage: itemsPerPage,
           currentPaginationIndex: 1, // Assuming this should be 1 for the first page
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
       return response;

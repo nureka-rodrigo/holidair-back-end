@@ -1,5 +1,5 @@
-const errorNotificationMail = require("../mail/error-notification");
-const sendMail = require("../mail/mail");
+const errorNotificationMail = require('../mail/error-notification');
+const sendMail = require('../mail/mail');
 
 async function sendErrorNotificationEmail(subject, message, error, errorType) {
   try {
@@ -8,10 +8,10 @@ async function sendErrorNotificationEmail(subject, message, error, errorType) {
         // "nayana@prologics.lk",
         // "sujith@holidayair.com",
         // "harsha@prologics.lk",
-        "nayanadarshana1@gmail.com",
+        'nayanadarshana1@gmail.com',
       ],
-      "",
-      "API Error ALERT",
+      '',
+      'API Error ALERT',
       errorNotificationMail({
         errorType: errorType,
         message: message,
@@ -21,18 +21,18 @@ async function sendErrorNotificationEmail(subject, message, error, errorType) {
     );
   } catch (error) {
     console.log(error);
-    return "";
+    return '';
   }
 }
 
 async function getClientIp(req) {
   try {
-    const response = await fetch("https://api.ipify.org?format=json");
+    const response = await fetch('https://api.ipify.org?format=json');
     const data = await response.json();
     return data.ip;
   } catch (error) {
     console.log(error);
-    return "";
+    return '';
   }
 }
 

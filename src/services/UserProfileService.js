@@ -1,9 +1,9 @@
-const HotelBookingDetail = require("../models/HotelBooking/BookingDetail");
-const { User } = require("../models/UserManagement/User");
-const BookingDetails = require("../models/flightBooking/BookingDetails");
-const formatCurrency = require("../utils/formatCurrency");
-const HotelBookingService = require("./hotel/HotelBookingService");
-const moment = require("moment");
+const HotelBookingDetail = require('../models/HotelBooking/BookingDetail');
+const { User } = require('../models/UserManagement/User');
+const BookingDetails = require('../models/flightBooking/BookingDetails');
+const formatCurrency = require('../utils/formatCurrency');
+const HotelBookingService = require('./hotel/HotelBookingService');
+const moment = require('moment');
 
 class UserProfileService {
   async getBookingData(userId) {
@@ -15,7 +15,7 @@ class UserProfileService {
       const flightBooking = await BookingDetails.find(query);
 
       if (!flightBooking || flightBooking.length === 0) {
-        return res.status(404).json({ message: "No booking details found" });
+        return res.status(404).json({ message: 'No booking details found' });
       }
 
       // Add a display ID to each booking detail
@@ -25,20 +25,20 @@ class UserProfileService {
           amount: formatCurrency(booking.amount),
           booking_status: booking.booking_status,
           trip_type:
-            booking.trip_type === "RT"
-              ? "Round Trip"
-              : booking.trip_type === "OW"
-              ? "One Way"
-              : "Multi City",
+            booking.trip_type === 'RT'
+              ? 'Round Trip'
+              : booking.trip_type === 'OW'
+                ? 'One Way'
+                : 'Multi City',
           // email: booking.email,
           provider_reference: booking.brightsun_reference,
           booking_id: booking.booking_id,
-          created_at: moment(booking.createdAt).format("YYYY-MM-DD HH:mm:ss"),
+          created_at: moment(booking.createdAt).format('YYYY-MM-DD HH:mm:ss'),
           origin:
             booking.flight_data != undefined
               ? booking.flight_data.airSolutions[0].journey[0].airSegments[0]
                   .origin
-              : "",
+              : '',
         };
       });
 

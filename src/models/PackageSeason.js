@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const PackageSeasonSchema = new mongoose.Schema({
   package_id: {
@@ -12,13 +12,13 @@ const PackageSeasonSchema = new mongoose.Schema({
   },
   currency_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Currency",
+    ref: 'Currency',
   },
   price: {
     type: String,
   },
 });
 
-const PackageSeason = mongoose.model("PackageSeason", PackageSeasonSchema);
+const PackageSeason = mongoose.model('PackageSeason', PackageSeasonSchema);
 
 module.exports = PackageSeason;

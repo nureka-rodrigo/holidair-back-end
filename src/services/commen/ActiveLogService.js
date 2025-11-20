@@ -44,16 +44,16 @@ class ActiveLogService {
       const query = filters;
 
       if (search) {
-        query["$or"] = [
-          { user: { $regex: search, $options: "i" } },
-          { function_name: { $regex: search, $options: "i" } },
-          { UUID: { $regex: search, $options: "i" } },
-          { device: { $regex: search, $options: "i" } },
-          { ip_address: { $regex: search, $options: "i" } },
-          { location: { $regex: search, $options: "i" } },
-          { browser: { $regex: search, $options: "i" } },
-          { os: { $regex: search, $options: "i" } },
-          { doc_ids: { $regex: search, $options: "i" } },
+        query['$or'] = [
+          { user: { $regex: search, $options: 'i' } },
+          { function_name: { $regex: search, $options: 'i' } },
+          { UUID: { $regex: search, $options: 'i' } },
+          { device: { $regex: search, $options: 'i' } },
+          { ip_address: { $regex: search, $options: 'i' } },
+          { location: { $regex: search, $options: 'i' } },
+          { browser: { $regex: search, $options: 'i' } },
+          { os: { $regex: search, $options: 'i' } },
+          { doc_ids: { $regex: search, $options: 'i' } },
         ];
       }
 
@@ -71,7 +71,7 @@ class ActiveLogService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -79,7 +79,7 @@ class ActiveLogService {
           dataCount: count,
           currentPaginationIndex: page,
           dataPerPage: itemsPerPage,
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
 

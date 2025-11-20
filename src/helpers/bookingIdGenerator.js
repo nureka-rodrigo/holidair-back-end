@@ -1,9 +1,9 @@
-const HotelBookingDetail = require("../models/HotelBooking/BookingDetail");
-const BookingDetails = require("../models/flightBooking/BookingDetails");
+const HotelBookingDetail = require('../models/HotelBooking/BookingDetail');
+const BookingDetails = require('../models/flightBooking/BookingDetails');
 
 // Helper function to generate random digits
 function getRandomDigits(length) {
-  let digits = "";
+  let digits = '';
   for (let i = 0; i < length; i++) {
     digits += Math.floor(Math.random() * 10).toString();
   }
@@ -19,7 +19,7 @@ async function generateBookingID(prefix) {
     const randomLength = Math.floor(Math.random() * (12 - 8 + 1)) + 8;
     bookingID = `${prefix}${getRandomDigits(randomLength)}`;
 
-    if (prefix === "FL") {
+    if (prefix === 'FL') {
       exists = await BookingDetails.exists({ booking_id: bookingID });
     } else {
       exists = await HotelBookingDetail.exists({ booking_id: bookingID });

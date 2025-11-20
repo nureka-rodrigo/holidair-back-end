@@ -1,6 +1,6 @@
-const UserPermissionAssign = require("../models/UserManagement/Permissions/UserPermissionAssign");
-const permissionConfig = require("../configs/userPermisions.json");
-const { Page } = require("puppeteer");
+const UserPermissionAssign = require('../models/UserManagement/Permissions/UserPermissionAssign');
+const permissionConfig = require('../configs/userPermisions.json');
+const { Page } = require('puppeteer');
 
 async function validateAllUserPermission(userId) {
   let permissionBluePrint = {
@@ -38,14 +38,14 @@ async function validateAllUserPermission(userId) {
 
   const permissions = await UserPermissionAssign.findOne({
     user_id: userId,
-  }).select("permission_ids -_id");
+  }).select('permission_ids -_id');
 
   if (permissions === null || permissions.length === 0) {
     return permissionBluePrint;
   }
 
   const permissionIds = await permissions.permission_ids.map((permission) =>
-    permission.toString(),
+    permission.toString()
   );
 
   const updatePermission = (permissionType, action, masterPermission) => {
@@ -57,12 +57,12 @@ async function validateAllUserPermission(userId) {
     }
   };
 
-  for (let action of ["create", "read", "update", "delete"]) {
-    updatePermission("user", action, "USER MANAGEMENT");
-    updatePermission("role", action, "ROLE MANAGEMENT");
-    updatePermission("permission", action, "PERMISSION MANAGEMENT");
-    updatePermission("defect", action, "DEFECT MANAGEMENT");
-    updatePermission("rim", action, "RIM SIZE");
+  for (let action of ['create', 'read', 'update', 'delete']) {
+    updatePermission('user', action, 'USER MANAGEMENT');
+    updatePermission('role', action, 'ROLE MANAGEMENT');
+    updatePermission('permission', action, 'PERMISSION MANAGEMENT');
+    updatePermission('defect', action, 'DEFECT MANAGEMENT');
+    updatePermission('rim', action, 'RIM SIZE');
   }
 
   return permissionBluePrint;
@@ -86,9 +86,9 @@ async function validateUserPermission(userId) {
 
   const permissions = await UserPermissionAssign.findOne({
     user_id: userId,
-  }).select("permission_ids -_id");
+  }).select('permission_ids -_id');
   const permissionIds = permissions.permission_ids.map((permission) =>
-    permission.toString(),
+    permission.toString()
   );
 
   const updatePermission = (permissionType, action, masterPermission) => {
@@ -100,9 +100,9 @@ async function validateUserPermission(userId) {
     }
   };
 
-  ["create", "read", "update", "delete"].forEach((action) => {
-    updatePermission("user", action, "USER MANAGEMENT");
-    updatePermission("role", action, "ROLE MANAGEMENT");
+  ['create', 'read', 'update', 'delete'].forEach((action) => {
+    updatePermission('user', action, 'USER MANAGEMENT');
+    updatePermission('role', action, 'ROLE MANAGEMENT');
   });
 
   return permissionBluePrint;

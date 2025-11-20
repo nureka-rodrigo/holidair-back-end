@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const secretKey = crypto.randomBytes(32).toString("hex");
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const secretKey = crypto.randomBytes(32).toString('hex');
 
 function verifyToken(req, res, next) {
   try {
@@ -8,21 +8,21 @@ function verifyToken(req, res, next) {
     // const token = req.headers.authorization;
 
     const token =
-      req.body.token || req.query.token || req.headers["x-access-token"];
+      req.body.token || req.query.token || req.headers['x-access-token'];
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized - Token missing" });
+      return res.status(401).json({ message: 'Unauthorized - Token missing' });
     }
 
     jwt.verify(
-      token.replace("Bearer ", ""),
+      token.replace('Bearer ', ''),
       process.env.JWT_SECRET_KEY,
       (err, decoded) => {
         if (err) {
           console.error(err);
           return res
             .status(401)
-            .json({ message: "Unauthorized - Invalid token" });
+            .json({ message: 'Unauthorized - Invalid token' });
         }
 
         // The token is valid, and `decoded` contains the payload
@@ -31,7 +31,7 @@ function verifyToken(req, res, next) {
       }
     );
   } catch (error) {
-    res.status(401).json({ error: "Unauthorized - Invalid token"});
+    res.status(401).json({ error: 'Unauthorized - Invalid token' });
   }
 }
 

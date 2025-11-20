@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const AttractionPaxDetailSchema = new mongoose.Schema({
   attraction_booking_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "AttractionBookingDetail",
+    ref: 'AttractionBookingDetail',
   },
   age: { type: Number, required: true },
   name: { type: String, required: true },
@@ -12,7 +12,7 @@ const AttractionPaxDetailSchema = new mongoose.Schema({
 });
 
 const AttractionPaxDetail = mongoose.model(
-  "AttractionPaxDetail",
+  'AttractionPaxDetail',
   AttractionPaxDetailSchema
 );
 

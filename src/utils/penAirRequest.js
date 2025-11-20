@@ -1,6 +1,6 @@
-const xml2js = require("xml2js");
-const axios = require("axios");
-const fs = require("fs");
+const xml2js = require('xml2js');
+const axios = require('axios');
+const fs = require('fs');
 
 async function penAirApiRequest(data) {
   try {
@@ -151,29 +151,29 @@ async function penAirApiRequest(data) {
     // console.log(xmlData);
 
     const response = await axios({
-      method: "POST",
+      method: 'POST',
       url: process.env.PEN_AIR_URL,
       headers: {
-        "Content-Type": "text/xml",
-        SOAPAction: "http://www.penguininc.com/FolderCreateClient",
+        'Content-Type': 'text/xml',
+        SOAPAction: 'http://www.penguininc.com/FolderCreateClient',
       },
       data: xmlData,
       timeout: 5000, // Increase timeout to 5 seconds
       maxContentLength: 2000000, // Limit response size to 2MB (adjust as needed)
     });
 
-    console.log("req", xmlData);
+    console.log('req', xmlData);
 
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.log("Response Data:", error.response.data);
+      console.log('Response Data:', error.response.data);
       // console.log("Response Status:", error.response.status);
       // console.log("Response Headers:", error.response.headers);
     } else if (error.request) {
-      console.log("No response received", error.request);
+      console.log('No response received', error.request);
     } else {
-      console.log("Error:", error.message);
+      console.log('Error:', error.message);
     }
   }
 }

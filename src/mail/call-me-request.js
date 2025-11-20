@@ -1,20 +1,20 @@
 module.exports = (data) => {
   // Filter out fields with "N/A"
   const filteredData = Object.entries(data).filter(
-    ([key, value]) => value !== "N/A"
+    ([key, value]) => value !== 'N/A'
   );
 
   // Define the correct order of fields
   const fieldOrder = [
-    "title",
-    "enquiryType",
-    "passenger_name",
-    "email",
-    "contact_number",
-    "callDate",
-    "callTimeFrom",
-    "callTimeTo",
-    "message",
+    'title',
+    'enquiryType',
+    'passenger_name',
+    'email',
+    'contact_number',
+    'callDate',
+    'callTimeFrom',
+    'callTimeTo',
+    'message',
   ];
 
   // Sort the filtered data based on the correct order
@@ -29,7 +29,7 @@ module.exports = (data) => {
             <tr>
               <td style="padding-left: 20px; font-size: 16px; line-height: 4px; background-color: #e2e7f3;">
                 <p><strong>${key
-                  .replace(/_/g, " ")
+                  .replace(/_/g, ' ')
                   .replace(/\b\w/g, (l) => l.toUpperCase())}:</strong></p>
               </td>
               <td style="font-size: 16px; line-height: 4px; background-color: #e2e7f3;">
@@ -38,7 +38,7 @@ module.exports = (data) => {
             </tr>
           `
     )
-    .join("");
+    .join('');
 
   return `<!doctype html>
       <html lang="en-US">

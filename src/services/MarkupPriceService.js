@@ -1,5 +1,5 @@
-const { valid } = require("joi");
-const MarkupPrice = require("../models/MarkupPrice");
+const { valid } = require('joi');
+const MarkupPrice = require('../models/MarkupPrice');
 
 class MarkupPriceService {
   async create(data) {
@@ -48,7 +48,7 @@ class MarkupPriceService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -60,7 +60,7 @@ class MarkupPriceService {
           dataCount: count,
           dataPerPage: itemsPerPage,
           currentPaginationIndex: 1, // Assuming this should be 1 for the first page
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
       return response;

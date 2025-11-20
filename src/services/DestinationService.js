@@ -1,4 +1,4 @@
-const Destination = require("../models/Destination");
+const Destination = require('../models/Destination');
 
 class DestinationService {
   async create(data) {
@@ -44,7 +44,7 @@ class DestinationService {
       const query = { is_deleted: false, ...filters };
 
       if (search) {
-        query["$or"] = [{ name: { $regex: search, $options: "i" } }];
+        query['$or'] = [{ name: { $regex: search, $options: 'i' } }];
       }
 
       const result = await Destination.find(query);
@@ -58,7 +58,7 @@ class DestinationService {
           dataCount: 0,
           currentPaginationIndex: page,
           dataPerPage: 20,
-          message: "There are not matching records.",
+          message: 'There are not matching records.',
         };
       } else {
         response = {
@@ -66,9 +66,9 @@ class DestinationService {
             _id: destination._id,
             name: destination.name,
             description: destination.description
-              ? destination.description.split(" ").slice(0, 10).join(" ") +
-                "..."
-              : "",
+              ? destination.description.split(' ').slice(0, 10).join(' ') +
+                '...'
+              : '',
             image_url: destination.image_url,
             is_deleted: destination.is_deleted,
             createdAt: destination.createdAt,
@@ -77,7 +77,7 @@ class DestinationService {
           dataCount: count,
           dataPerPage: itemsPerPage,
           currentPaginationIndex: 1, // Assuming this should be 1 for the first page
-          message: "Data Returned.",
+          message: 'Data Returned.',
         };
       }
       return response;

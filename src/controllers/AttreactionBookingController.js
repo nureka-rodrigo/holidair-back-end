@@ -1,5 +1,5 @@
-const sendErrorNotificationEmail = require("../helpers/genaralHelper");
-const AttractionBookingService = require("../services/attraction/AttractionBookingService");
+const sendErrorNotificationEmail = require('../helpers/genaralHelper');
+const AttractionBookingService = require('../services/attraction/AttractionBookingService');
 
 class AttractionBookingController {
   async bookAttraction(req, res) {
@@ -13,11 +13,11 @@ class AttractionBookingController {
       res.status(200).json({ data: response });
     } catch (error) {
       await sendErrorNotificationEmail(
-        "",
+        '',
 
         error,
-        "",
-        "Attraction booking API Error"
+        '',
+        'Attraction booking API Error'
       );
       res.status(500).json({ error: error });
     }

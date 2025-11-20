@@ -1,16 +1,16 @@
-const generateBookingID = require("../../helpers/bookingIdGenerator");
-const HotelBookingDetail = require("../../models/HotelBooking/BookingDetail");
-const PaxDetail = require("../../models/HotelBooking/HotelPaxDetail");
+const generateBookingID = require('../../helpers/bookingIdGenerator');
+const HotelBookingDetail = require('../../models/HotelBooking/BookingDetail');
+const PaxDetail = require('../../models/HotelBooking/HotelPaxDetail');
 
 class HotelBookingService {
   async create(data, userId) {
     try {
       const transformedData = {
         user_id: userId,
-        booking_id: await generateBookingID("HT"),
+        booking_id: await generateBookingID('HT'),
         name: data.holder.name,
         surname: data.holder.surname,
-        rate_key: "",
+        rate_key: '',
         email: data.email, // Ensure email is part of the input data
         reference: data.clientReference,
         creation_date: new Date(),
@@ -39,7 +39,7 @@ class HotelBookingService {
 
       return await PaxDetail.create(paxDetailsWithBookingId);
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -48,7 +48,7 @@ class HotelBookingService {
     try {
       return await HotelBookingDetail.findById(id);
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -70,7 +70,7 @@ class HotelBookingService {
         return null;
       }
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }
@@ -89,7 +89,7 @@ class HotelBookingService {
         return null;
       }
     } catch (error) {
-      console.error("Error creating pax detail:", error);
+      console.error('Error creating pax detail:', error);
       throw error;
     }
   }

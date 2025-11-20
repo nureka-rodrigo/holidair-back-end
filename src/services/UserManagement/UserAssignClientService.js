@@ -1,16 +1,13 @@
 const UserAssignClient = require('../../models/UserManagement/UserAssignClient');
 const Customer = require('../../models/Customer/CustomerModel');
 
-
-
 class UserAssignClientService {
   async createUserAssignClient(userId, clientId) {
+    let coustermer = await Customer.findOne({ code: clientId });
 
-   let coustermer=await Customer.findOne({code:clientId});
-
-   const userAssignClient = new UserAssignClient({
+    const userAssignClient = new UserAssignClient({
       user_id: userId,
-      client_id: coustermer.code
+      client_id: coustermer.code,
     });
     await userAssignClient.save();
     return userAssignClient;
@@ -18,7 +15,6 @@ class UserAssignClientService {
 
   async deleteUserAssignClient(id) {
     await UserAssignClient.findByIdAndDelete(id);
-
   }
 
   async getAllUserAssignClients(options, filters) {

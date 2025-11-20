@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BookingRequestSchema = new mongoose.Schema(
   {
@@ -32,12 +32,12 @@ const BookingRequestSchema = new mongoose.Schema(
     },
     plan_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Package",
+      ref: 'Package',
     },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
 
-const BookingRequest = mongoose.model("BookingRequest", BookingRequestSchema);
+const BookingRequest = mongoose.model('BookingRequest', BookingRequestSchema);
 
 module.exports = BookingRequest;

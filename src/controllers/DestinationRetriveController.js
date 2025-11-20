@@ -1,13 +1,13 @@
-const axios = require("axios");
+const axios = require('axios');
 
-const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
-const Country = require("../models/Country");
-const HotelDestination = require("../models/HotelDestination");
-const ActivityDestination = require("../models/ActivityDestination");
-const InternationalAirport = require("../models/InternationlAirport");
-const { parse } = require("csv-parse/sync");
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const Country = require('../models/Country');
+const HotelDestination = require('../models/HotelDestination');
+const ActivityDestination = require('../models/ActivityDestination');
+const InternationalAirport = require('../models/InternationlAirport');
+const { parse } = require('csv-parse/sync');
 
 class DestinationRetriveController {
   async hotelDestinations(req, res) {
@@ -15,19 +15,19 @@ class DestinationRetriveController {
       const countries = await Country.find();
 
       const baseURL = `${process.env.HOTEL_URL}/hotel-content-api`;
-      const endpoint = "1.0/locations/destinations";
+      const endpoint = '1.0/locations/destinations';
       const timestamp = Math.floor(Date.now() / 1000);
       const toHash = `${process.env.HOTELBEDS_API_KEY}${process.env.HOTELBEDS_API_SECRET}${timestamp}`;
       const xSignature = crypto
-        .createHash("sha256")
+        .createHash('sha256')
         .update(toHash)
-        .digest("hex");
+        .digest('hex');
 
       const headers = {
-        "Api-key": `${process.env.HOTELBEDS_API_KEY}`,
-        "X-Signature": xSignature,
-        Accept: "application/json",
-        "Accept-Encoding": "gzip, deflate, br",
+        'Api-key': `${process.env.HOTELBEDS_API_KEY}`,
+        'X-Signature': xSignature,
+        Accept: 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
       };
 
       const destinations = []; // Array to store all destinations
@@ -36,13 +36,13 @@ class DestinationRetriveController {
         const url = `${baseURL}/${endpoint}`;
 
         const params = {
-          fields: "all", // Request all fields
+          fields: 'all', // Request all fields
           countryCodes: country.code, // Country code for the query
-          language: "ENG", // Language code (e.g., "ENG" for English)
+          language: 'ENG', // Language code (e.g., "ENG" for English)
           from: 1, // Starting record
           to: 100, // Ending record (adjust as needed)
           useSecondaryLanguage: true, // Use secondary language if required
-          lastUpdateTime: "2020-03-03", // Adjust to filter records by date
+          lastUpdateTime: '2020-03-03', // Adjust to filter records by date
         };
 
         try {
@@ -58,8 +58,8 @@ class DestinationRetriveController {
                   name: destination.name
                     ? destination.name.content
                       ? destination.name.content
-                      : ""
-                    : "",
+                      : ''
+                    : '',
                   country_code: country.code,
                   country: country.name,
                 });
@@ -84,7 +84,7 @@ class DestinationRetriveController {
           );
         }
       }
-      res.status(200).json({ message: "Destinations Added Successfully" });
+      res.status(200).json({ message: 'Destinations Added Successfully' });
       // console.log("Fetched destinations:", destinations);
       return destinations;
     } catch (error) {
@@ -100,20 +100,20 @@ class DestinationRetriveController {
       const timestamp = Math.floor(Date.now() / 1000);
       const toHash = `${process.env.ATTRACTION_API_KEY}${process.env.ATTRACTION__API_SECRET}${timestamp}`;
       const xSignature = crypto
-        .createHash("sha256")
+        .createHash('sha256')
         .update(toHash)
-        .digest("hex");
+        .digest('hex');
 
       // Define the headers
       const headers = {
-        "Api-key": `${process.env.ATTRACTION_API_KEY}`,
-        "X-Signature": xSignature,
-        Accept: "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "User-Agent": "axios/1.7.7",
-        Connection: "keep-alive",
-        Host: "api.test.hotelbeds.com",
-        "Cache-Control": "no-cache",
+        'Api-key': `${process.env.ATTRACTION_API_KEY}`,
+        'X-Signature': xSignature,
+        Accept: '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'User-Agent': 'axios/1.7.7',
+        Connection: 'keep-alive',
+        Host: 'api.test.hotelbeds.com',
+        'Cache-Control': 'no-cache',
       };
 
       // Fetch all country codes
@@ -121,9 +121,8 @@ class DestinationRetriveController {
       const countryCodes = countries.map((country) => country.code);
 
       // Fetch country codes already in ActivityDestination
-      const existingCountryCodes = await ActivityDestination.distinct(
-        "country_code"
-      );
+      const existingCountryCodes =
+        await ActivityDestination.distinct('country_code');
 
       // Filter country codes not in ActivityDestination
       const newCountryCodes = countryCodes.filter(
@@ -168,10 +167,10 @@ class DestinationRetriveController {
         }
       }
 
-      res.status(200).json({ message: "Destinations added successfully." });
+      res.status(200).json({ message: 'Destinations added successfully.' });
     } catch (error) {
-      console.error("Error processing destinations:", error.message);
-      res.status(500).json({ message: "Internal Server Error." });
+      console.error('Error processing destinations:', error.message);
+      res.status(500).json({ message: 'Internal Server Error.' });
     }
   }
 
@@ -179,13 +178,13 @@ class DestinationRetriveController {
     try {
       // Fetch data from the URL
       const response = await axios.get(
-        "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
+        'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat'
       );
       const rawData = response.data;
 
       // Parse CSV data
       const records = parse(rawData, {
-        delimiter: ",",
+        delimiter: ',',
         trim: true,
       });
 
@@ -210,11 +209,11 @@ class DestinationRetriveController {
       for (const airport of airportData) {
         await InternationalAirport.create(airport);
       }
-      res.status(200).json({ message: "Airports Added Successfully" });
+      res.status(200).json({ message: 'Airports Added Successfully' });
 
-      console.log("Airports saved successfully!");
+      console.log('Airports saved successfully!');
     } catch (error) {
-      console.error("Error fetching or saving airports:", error.message);
+      console.error('Error fetching or saving airports:', error.message);
     }
   }
 }

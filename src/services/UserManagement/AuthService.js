@@ -1,9 +1,9 @@
-const { User, validate } = require("../../models/UserManagement/User");
-const mongoose = require("mongoose");
-const RolePermissionAssign = require("../../models/UserManagement/Permissions/RolePermissionAssign");
-const UserPermissionHandleService = require("./UserPermissionHandleService");
-const bcrypt = require("bcrypt");
-const UserRole = require("../../models/UserManagement/UserRole");
+const { User, validate } = require('../../models/UserManagement/User');
+const mongoose = require('mongoose');
+const RolePermissionAssign = require('../../models/UserManagement/Permissions/RolePermissionAssign');
+const UserPermissionHandleService = require('./UserPermissionHandleService');
+const bcrypt = require('bcrypt');
+const UserRole = require('../../models/UserManagement/UserRole');
 
 /**
  * @class AuthServices
@@ -30,7 +30,7 @@ class AuthServices {
       if (userRol) {
       } else {
         userRol = await UserRole.create({
-          role: "Customer",
+          role: 'Customer',
           status: true,
         });
       }
@@ -39,12 +39,12 @@ class AuthServices {
       userData.user_role_id = userRol._id;
 
       const isEmailExist = await User.findOne({ email: userData.email });
-      if (isEmailExist) throw "Email already exists";
+      if (isEmailExist) throw 'Email already exists';
 
       const isUsernameExist = await User.findOne({
         user_name: userData.user_name,
       });
-      if (isUsernameExist) throw "Username already exists";
+      if (isUsernameExist) throw 'Username already exists';
 
       const encryptPassword = await bcrypt.hash(userData.password, 10);
       userData.password = encryptPassword;
@@ -73,8 +73,8 @@ class AuthServices {
    */
   async getUserById(userId) {
     try {
-      const user = await User.findById(userId).select("-password");
-      if (!user) throw "User not found.";
+      const user = await User.findById(userId).select('-password');
+      if (!user) throw 'User not found.';
       return user;
     } catch (error) {
       throw error;
@@ -91,12 +91,12 @@ class AuthServices {
   async updateUserById(id, data) {
     try {
       const user = await User.findByIdAndUpdate(id, data, { new: true });
-      if (!user) throw "User not found";
+      if (!user) throw 'User not found';
 
-      return { message: "User updated" };
+      return { message: 'User updated' };
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while updating user");
+      throw new Error('Error occurred while updating user');
     }
   }
 
@@ -106,11 +106,11 @@ class AuthServices {
         { _id: { $in: idLst } },
         { $set: data }
       );
-      if (!users) throw "Users not found";
-      return { message: "Users updated" };
+      if (!users) throw 'Users not found';
+      return { message: 'Users updated' };
     } catch (error) {
       console.error(error);
-      throw new Error("Error occurred while updating user");
+      throw new Error('Error occurred while updating user');
     }
   }
 
@@ -118,16 +118,16 @@ class AuthServices {
     const userChainlst = await User.aggregate([
       {
         $match: {
-          _id: new mongoose.Types.ObjectId("660ccfc48788dfa581e6fd5e"),
+          _id: new mongoose.Types.ObjectId('660ccfc48788dfa581e6fd5e'),
         },
       }, // Match the starting user
       {
         $graphLookup: {
-          from: "users", // Collection name
-          startWith: "$_id", // Field to start with
-          connectFromField: "_id", // Field to connect from
-          connectToField: "mapping", // Field to connect to
-          as: "userChain", // Output array field
+          from: 'users', // Collection name
+          startWith: '$_id', // Field to start with
+          connectFromField: '_id', // Field to connect from
+          connectToField: 'mapping', // Field to connect to
+          as: 'userChain', // Output array field
           maxDepth: 10, // Set the maximum depth to prevent infinite loops
         },
       },
@@ -136,16 +136,16 @@ class AuthServices {
           _id: 0,
           userChain: {
             $reduce: {
-              input: "$userChain",
-              initialValue: ["$_id"],
-              in: { $concatArrays: ["$$value", ["$$this._id"]] },
+              input: '$userChain',
+              initialValue: ['$_id'],
+              in: { $concatArrays: ['$$value', ['$$this._id']] },
             },
           },
         },
       },
     ]);
 
-    console.log("userChainlst : ", userChainlst);
+    console.log('userChainlst : ', userChainlst);
     return userChainlst;
     // const userChaind = await User.aggregate([
     //     { $match: { _id: "ObjectId(660ccfc48788dfa581e6fd5e)" } },

@@ -1,5 +1,5 @@
-const { required } = require("joi");
-const mongoose = require("mongoose");
+const { required } = require('joi');
+const mongoose = require('mongoose');
 
 const DestinationSchema = new mongoose.Schema(
   {
@@ -23,6 +23,6 @@ const DestinationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Destination = mongoose.model("Destination", DestinationSchema);
+const Destination = mongoose.model('Destination', DestinationSchema);
 
 module.exports = Destination;

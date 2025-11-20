@@ -8,6 +8,4 @@ const UserRolePermissionController = require('../../controllers/UserManagement/U
 router.put('/:id', UserRolePermissionController.assignPermission);
 router.get('/:id', UserRolePermissionController.getPermission);
 
-
-
 module.exports = router;

@@ -1,10 +1,10 @@
-const MarkupService = require("../services/MarkupService");
+const MarkupService = require('../services/MarkupService');
 
 class MarkupController {
   async createMarkup(req, res) {
     try {
       const values = await MarkupService.getMarkupByType(req.body.type);
-      let response = "";
+      let response = '';
       console.log(values, req.body.type);
       if (values) {
         console.log(values._id);
@@ -13,9 +13,9 @@ class MarkupController {
         response = await MarkupService.createMarkup(req.body);
       }
 
-      res.status(201).json({ message: "Markup created", data: response });
+      res.status(201).json({ message: 'Markup created', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
@@ -25,18 +25,18 @@ class MarkupController {
         req.params.id,
         req.body
       );
-      res.status(201).json({ message: "Markup updated", data: response });
+      res.status(201).json({ message: 'Markup updated', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
   async getSelectedMarkup(req, res) {
     try {
       const response = await MarkupService.getMarkupById(req.params.id);
-      res.status(200).json({ message: "", data: response });
+      res.status(200).json({ message: '', data: response });
     } catch (_) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 }

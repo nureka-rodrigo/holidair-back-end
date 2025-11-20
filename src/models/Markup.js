@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const MarkupSchema = new mongoose.Schema(
   {
@@ -54,6 +54,6 @@ const MarkupSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Markup = mongoose.model("Markup", MarkupSchema);
+const Markup = mongoose.model('Markup', MarkupSchema);
 
 module.exports = Markup;
