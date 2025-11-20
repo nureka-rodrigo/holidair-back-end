@@ -8,3 +8,10 @@
 
 /scripts/data/permission.data.json
 /src/configs/userPermissions.json
+
+# IDE/editors
+.vscode
+.idea
+
+# misc
+.DS_Store
