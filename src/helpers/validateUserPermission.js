@@ -1,6 +1,5 @@
 const UserPermissionAssign = require('../models/UserManagement/Permissions/UserPermissionAssign');
-const permissionConfig = require('../configs/userPermisions.json');
-const { Page } = require('puppeteer');
+const permissionConfig = require('../configs/userPermissions.json');
 
 async function validateAllUserPermission(userId) {
   let permissionBluePrint = {
